@@ -61,7 +61,7 @@
 - [ ] **Idle detection**: foydalanuvchi kompyuterdan uzoqlashsa timer avtomatik pauza (Windows `GetLastInputInfo`)
 - [ ] **Fullscreen ilova aniqlash**: prezentatsiya/o'yin/video paytida xalaqit bermaslik (Do-Not-Disturb avto)
 - [x] **2 ta yetishmagan o'yin**: ✅ Rang Tanish (farqli rang topish), Nafas Olish (4-4-6 breathing) — commit `4ce4cb8`, brauzerda tekshirilgan
-- [ ] **Real analytics**: haftalik/oylik grafiklar DB'dan (recharts allaqachon dependency'da — ishlatilsin), streak hisobi real _(streak/health backend'da tayyor; haftalik grafik hali mock)_
+- [x] **Real analytics** ✅ (commit `94fa39d`): recharts BarChart (haftalik tanaffuslar) + AreaChart (salomatlik dinamikasi), `get_daily_stats`'dan real DB ma'lumot; streak/health backend'da real; browser preview uchun demo fallback
 - [x] **Eye Health Score algoritmi** ✅ hujjatlashtirilgan (Faza 0, `database.rs`): base 50 +10/bajarilgan −5/o'tkazilgan, 0–100 clamp
 - [x] **Autostart** ✅ (`tauri-plugin-autostart` + Sozlamalardagi toggle real OS autostart bilan)
 - [ ] **Tovushlar**: yumshoq ogohlantirish ovozlari (sound_enabled bilan)
