@@ -87,7 +87,9 @@
       "fri": "Fri",
       "sat": "Sat",
       "sun": "Sun"
-    }
+    },
+    "scoreTrend": "Health trend",
+    "demoNote": "Demo data — the app shows real statistics"
   },
   "games": {
     "title": "Eye Exercises",

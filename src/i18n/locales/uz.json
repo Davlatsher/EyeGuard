@@ -87,7 +87,9 @@
       "fri": "Ju",
       "sat": "Sh",
       "sun": "Ya"
-    }
+    },
+    "scoreTrend": "Salomatlik dinamikasi",
+    "demoNote": "Namuna ma’lumot — ilova ichida real statistika ko’rsatiladi"
   },
   "games": {
     "title": "Ko’z Mashqlari",

@@ -43,6 +43,7 @@ interface EyeGuardState {
   streak: number;
   totalBreaks: number;
   breakHistory: BreakRecord[];
+  dailyStats: backend.DailyStat[];
 
   // Overlay
   isOverlayVisible: boolean;
@@ -115,6 +116,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
     streak: 0,
     totalBreaks: 0,
     breakHistory: [],
+    dailyStats: [],
 
     // Overlay
     isOverlayVisible: false,
@@ -123,11 +125,12 @@ export const useStore = create<EyeGuardState>((set, get) => {
     hydrated: false,
 
     hydrate: async () => {
-      const [settings, summary, history, status] = await Promise.all([
+      const [settings, summary, history, status, daily] = await Promise.all([
         backend.getSettings(),
         backend.getStatsSummary(),
         backend.getBreakHistory(50),
         backend.getTimerStatus(),
+        backend.getDailyStats(7),
       ]);
 
       const patch: Partial<EyeGuardState> = { hydrated: true };
@@ -164,16 +167,19 @@ export const useStore = create<EyeGuardState>((set, get) => {
         patch.isTimerRunning = status.is_running;
         patch.nextBreakIn = status.next_break_in;
       }
+      if (daily) patch.dailyStats = daily;
 
       set(patch as EyeGuardState);
     },
 
     refreshStats: async () => {
-      const [summary, history] = await Promise.all([
+      const [summary, history, daily] = await Promise.all([
         backend.getStatsSummary(),
         backend.getBreakHistory(50),
+        backend.getDailyStats(7),
       ]);
       const patch: Partial<EyeGuardState> = {};
+      if (daily) patch.dailyStats = daily;
       if (summary) {
         patch.eyeHealthScore = summary.eye_health_score;
         patch.todayBreaks = summary.today_breaks;
