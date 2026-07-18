@@ -4,6 +4,8 @@ import { ChevronLeft, Target, Eye, Focus, Palette, Wind } from 'lucide-react';
 import FollowDot from './FollowDot';
 import BlinkTrainer from './BlinkTrainer';
 import FocusShift from './FocusShift';
+import ColorMatch from './ColorMatch';
+import Breathing from './Breathing';
 
 type GameType = 'menu' | 'followdot' | 'blink' | 'focus' | 'color' | 'breathing';
 
@@ -83,6 +85,8 @@ export default function MiniGames() {
           {activeGame === 'followdot' && <FollowDot key="followdot" />}
           {activeGame === 'blink' && <BlinkTrainer key="blink" />}
           {activeGame === 'focus' && <FocusShift key="focus" />}
+          {activeGame === 'color' && <ColorMatch key="color" />}
+          {activeGame === 'breathing' && <Breathing key="breathing" />}
         </AnimatePresence>
       </div>
     );
