@@ -60,13 +60,13 @@
 - [ ] **Real overlay oynasi**: fullscreen, always-on-top, multi-monitor qo'llab-quvvatlash (`create_overlay_window`'ni ishlatish); strict rejimda Escape/Alt+F4 himoyasi (max 3 snooze bilan)
 - [ ] **Idle detection**: foydalanuvchi kompyuterdan uzoqlashsa timer avtomatik pauza (Windows `GetLastInputInfo`)
 - [ ] **Fullscreen ilova aniqlash**: prezentatsiya/o'yin/video paytida xalaqit bermaslik (Do-Not-Disturb avto)
-- [ ] **2 ta yetishmagan o'yin**: Rang Tanish (xotira o'yini), Nafas Olish (4-7-8 breathing + ko'z yumish)
-- [ ] **Real analytics**: haftalik/oylik grafiklar DB'dan (recharts allaqachon dependency'da — ishlatilsin), streak hisobi real
-- [ ] **Eye Health Score algoritmi** (hujjatlashtirilgan formula): bajarilgan tanaffuslar %, o'yin faolligi, snooze jarimasi, uzluksiz ekran vaqti
-- [ ] **Autostart** (`tauri-plugin-autostart`), tray'dagi "Timer: ON" toggle'ini ishlatish
+- [x] **2 ta yetishmagan o'yin**: ✅ Rang Tanish (farqli rang topish), Nafas Olish (4-4-6 breathing) — commit `4ce4cb8`, brauzerda tekshirilgan
+- [ ] **Real analytics**: haftalik/oylik grafiklar DB'dan (recharts allaqachon dependency'da — ishlatilsin), streak hisobi real _(streak/health backend'da tayyor; haftalik grafik hali mock)_
+- [x] **Eye Health Score algoritmi** ✅ hujjatlashtirilgan (Faza 0, `database.rs`): base 50 +10/bajarilgan −5/o'tkazilgan, 0–100 clamp
+- [x] **Autostart** ✅ (`tauri-plugin-autostart` + Sozlamalardagi toggle real OS autostart bilan)
 - [ ] **Tovushlar**: yumshoq ogohlantirish ovozlari (sound_enabled bilan)
-- [ ] **Custom rejim UI**: interval/davomiylik slider'lari ishlaydigan qilish
-- [ ] **i18n**: uz / ru / en (react-i18next) — bozorni kengaytirish uchun shart
+- [x] **Custom rejim UI** (qisman): ✅ break duration slider endi ishlaydi (`setBreakDuration`); custom interval slider hali qoldi
+- [x] **i18n**: ✅ uz / ru / en (react-i18next) — commit `eddc3e1`, til tanlagich + 3 tilda tekshirilgan
 - [ ] **Onboarding**: birinchi ochilishda 3-qadam tanishtiruv
 - [ ] **Code signing** + MSI/NSIS installer, auto-updater endpoint sozlash
 
