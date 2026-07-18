@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, ChevronLeft, Target, Eye, Focus, Palette, Wind } from 'lucide-react';
+import { ChevronLeft, Target, Eye, Focus, Palette, Wind } from 'lucide-react';
 import FollowDot from './FollowDot';
 import BlinkTrainer from './BlinkTrainer';
 import FocusShift from './FocusShift';
@@ -21,25 +21,25 @@ const games: GameInfo[] = [
   {
     id: 'followdot',
     title: 'Nuqtani Kuzat',
-    desc: 'Ekranda harakatlanuvchi nuqtani kuzatib ko'z mushaklaringizni mashq qiling',
+    desc: 'Ekranda harakatlanuvchi nuqtani kuzatib ko’z mushaklaringizni mashq qiling',
     icon: <Target size={24} />,
     color: 'sky',
     duration: '20 soniya',
-    benefits: 'Ko'z mushaklari',
+    benefits: 'Ko’z mushaklari',
   },
   {
     id: 'blink',
-    title: 'Ko'z Yumish',
-    desc: 'Animatsiya bilan ko'zni yumish-ch yumish mashqi',
+    title: 'Ko’z Yumish',
+    desc: 'Animatsiya bilan ko’zni yumish-ch yumish mashqi',
     icon: <Eye size={24} />,
     color: 'emerald',
     duration: '30 soniya',
-    benefits: 'Ko'z namligi',
+    benefits: 'Ko’z namligi',
   },
   {
     id: 'focus',
     title: 'Fokus Almashtirish',
-    desc: 'Yaqin va uzoq nuqtalar o'rtasida fokusni o'zgartiring',
+    desc: 'Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartiring',
     icon: <Focus size={24} />,
     color: 'amber',
     duration: '20 soniya',
@@ -48,16 +48,16 @@ const games: GameInfo[] = [
   {
     id: 'color',
     title: 'Rang Tanish',
-    desc: 'Ranglarni eslab qolish va tanish orqali ko'zni dam oldiring',
+    desc: 'Ranglarni eslab qolish va tanish orqali ko’zni dam oldiring',
     icon: <Palette size={24} />,
     color: 'purple',
     duration: '30 soniya',
-    benefits: 'Ko'z dam olish',
+    benefits: 'Ko’z dam olish',
   },
   {
     id: 'breathing',
     title: 'Nafas Olish',
-    desc: 'Nafas olish bilan birga ko'zni yumish mashqi',
+    desc: 'Nafas olish bilan birga ko’zni yumish mashqi',
     icon: <Wind size={24} />,
     color: 'indigo',
     duration: '1 daqiqa',
@@ -76,7 +76,7 @@ export default function MiniGames() {
           className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
         >
           <ChevronLeft size={20} />
-          <span>O'yinlarga qaytish</span>
+          <span>O’yinlarga qaytish</span>
         </button>
 
         <AnimatePresence mode="wait">
@@ -91,8 +91,8 @@ export default function MiniGames() {
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <h2 className="text-2xl font-bold text-white">Ko'z Mashqlari</h2>
-        <p className="text-slate-400">Ko'zlaringizni dam oldirish uchun o'yinlar</p>
+        <h2 className="text-2xl font-bold text-white">Ko’z Mashqlari</h2>
+        <p className="text-slate-400">Ko’zlaringizni dam oldirish uchun o’yinlar</p>
       </div>
 
       <div className="grid gap-4">

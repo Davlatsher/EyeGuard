@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Focus, RotateCcw, ArrowLeftRight } from 'lucide-react';
+import { Focus, RotateCcw } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 
 export default function FocusShift() {
@@ -72,7 +72,7 @@ export default function FocusShift() {
           </div>
           <div>
             <h3 className="font-bold text-white">Fokus Almashtirish</h3>
-            <p className="text-sm text-slate-400">Yaqin va uzoq nuqtalar o'rtasida fokusni o'zgartiring</p>
+            <p className="text-sm text-slate-400">Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartiring</p>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function FocusShift() {
                 🔍
               </motion.div>
               <p className="text-slate-400 mb-6 max-w-xs mx-auto">
-                Yaqin va uzoq nuqtalar o'rtasida fokusni o'zgartirish akkomodatsiya mushaklarini mashq qiladi
+                Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartirish akkomodatsiya mushaklarini mashq qiladi
               </p>
               <button 
                 onClick={startExercise}
@@ -131,7 +131,7 @@ export default function FocusShift() {
                   YAQIN
                 </motion.div>
               </motion.div>
-              <p className="text-xl font-bold text-white mb-2">Ko'zingizni ekranga yaqinlashtiring</p>
+              <p className="text-xl font-bold text-white mb-2">Ko’zingizni ekranga yaqinlashtiring</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-mono font-bold text-amber-400">{timer}</span>
                 <span className="text-slate-500">soniya</span>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Timer, Bell, Volume2, Moon, Shield, Sliders } from 'lucide-react';
+import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power } from 'lucide-react';
 import { useStore, TimerMode, BreakMode } from '../store/useStore';
+import { setAutoStart } from '../lib/tauri';
 
 export default function TimerSettings() {
   const {
@@ -19,12 +20,12 @@ export default function TimerSettings() {
   const modes: { id: TimerMode; label: string; desc: string; time: string }[] = [
     { id: '20-20-20', label: '20-20-20', desc: 'Har 20 daqiqada 20 soniya', time: '20 min' },
     { id: 'pomodoro', label: 'Pomodoro', desc: '25 min ishlash, 5 min dam', time: '25 min' },
-    { id: 'custom', label: 'Custom', desc: 'O'zingiz sozlang', time: '30 min' },
+    { id: 'custom', label: 'Custom', desc: 'O’zingiz sozlang', time: '30 min' },
   ];
 
   const breakModes: { id: BreakMode; label: string; desc: string; color: string }[] = [
     { id: 'gentle', label: 'Yumshoq', desc: 'Ogohlantirish + xira ekran', color: 'emerald' },
-    { id: 'strict', label: 'Qat'iy', desc: 'Ekran to'liq bloklanadi', color: 'red' },
+    { id: 'strict', label: 'Qat’iy', desc: 'Ekran to’liq bloklanadi', color: 'red' },
     { id: 'camouflage', label: 'Kamuflyaj', desc: 'Shaffof overlay', color: 'purple' },
   ];
 
@@ -32,7 +33,7 @@ export default function TimerSettings() {
     <div className="space-y-6">
       <div className="mb-2">
         <h2 className="text-2xl font-bold text-white">Sozlamalar</h2>
-        <p className="text-slate-400">Ilovani o'zingizga moslang</p>
+        <p className="text-slate-400">Ilovani o’zingizga moslang</p>
       </div>
 
       {/* Timer Mode */}
@@ -126,9 +127,19 @@ export default function TimerSettings() {
           <ToggleSetting
             icon={<Moon size={18} />}
             label="Do Not Disturb"
-            desc="Barcha ogohlantirishlarni o'chirish"
+            desc="Barcha ogohlantirishlarni o’chirish"
             enabled={doNotDisturb}
             onToggle={() => toggleSetting('doNotDisturb')}
+          />
+          <ToggleSetting
+            icon={<Power size={18} />}
+            label="Avto-ishga tushirish"
+            desc="Windows bilan birga ochilsin"
+            enabled={autoStart}
+            onToggle={() => {
+              void setAutoStart(!autoStart);
+              toggleSetting('autoStart');
+            }}
           />
         </div>
       </Section>

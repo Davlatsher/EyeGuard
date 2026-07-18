@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye, Settings, BarChart3, Gamepad2, X } from 'lucide-react';
+import { Eye, Settings, BarChart3, Gamepad2 } from 'lucide-react';
 import { useStore } from './store/useStore';
+import { isTauri, onEvent } from './lib/tauri';
 import Dashboard from './components/Dashboard';
 import TimerSettings from './components/TimerSettings';
 import MiniGames from './components/MiniGames/MiniGames';
@@ -14,12 +15,39 @@ function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const { isTimerRunning, timerMode, nextBreakIn, isOverlayVisible, decrementNextBreak } = useStore();
 
-  // Timer countdown
+  // On mount: hydrate from backend and subscribe to backend-driven events.
   useEffect(() => {
+    const store = useStore.getState();
+    void store.hydrate();
+
+    if (!isTauri()) return;
+
+    const unlisteners: Array<Promise<() => void>> = [
+      onEvent<number>('timer-tick', (secs) => useStore.getState().setNextBreakIn(secs)),
+      onEvent<void>('break-due', () => {
+        const s = useStore.getState();
+        if (!s.isOverlayVisible) s.showOverlay('break');
+      }),
+      onEvent<void>('stats-updated', () => void useStore.getState().refreshStats()),
+    ];
+
+    return () => {
+      unlisteners.forEach((p) => p.then((un) => un()));
+    };
+  }, []);
+
+  // Browser-only fallback countdown (desktop app is driven by the Rust timer).
+  useEffect(() => {
+    if (isTauri()) return;
     if (!isTimerRunning || isOverlayVisible) return;
 
     const interval = setInterval(() => {
-      decrementNextBreak();
+      const s = useStore.getState();
+      if (s.nextBreakIn <= 1) {
+        if (!s.isOverlayVisible) s.showOverlay('break');
+      } else {
+        decrementNextBreak();
+      }
     }, 1000);
 
     return () => clearInterval(interval);
@@ -50,7 +78,7 @@ function App() {
             </motion.div>
             <div>
               <h1 className="text-xl font-bold text-white">EyeGuard</h1>
-              <p className="text-xs text-slate-400">Ko'z himoyasi ilovasi</p>
+              <p className="text-xs text-slate-400">Ko’z himoyasi ilovasi</p>
             </div>
           </div>
 
@@ -96,7 +124,7 @@ function App() {
           />
           <NavButton 
             icon={<Gamepad2 size={20} />} 
-            label="O'yinlar" 
+            label="O’yinlar" 
             isActive={activeTab === 'games'} 
             onClick={() => setActiveTab('games')} 
           />

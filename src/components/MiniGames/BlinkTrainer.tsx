@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye, RotateCcw, Droplets } from 'lucide-react';
+import { RotateCcw, Droplets } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 
 export default function BlinkTrainer() {
@@ -71,8 +71,8 @@ export default function BlinkTrainer() {
             <Droplets className="w-5 h-5 text-emerald-400" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Ko'z Yumish Mashqi</h3>
-            <p className="text-sm text-slate-400">Ko'zingizni namlab turish uchun 10 marta yumish-ch yumish</p>
+            <h3 className="font-bold text-white">Ko’z Yumish Mashqi</h3>
+            <p className="text-sm text-slate-400">Ko’zingizni namlab turish uchun 10 marta yumish-ch yumish</p>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function BlinkTrainer() {
                 😌
               </motion.div>
               <p className="text-slate-400 mb-6 max-w-xs mx-auto">
-                Ko'zni yumish-ch yumish mashqi — ko'z namligini saqlaydi
+                Ko’zni yumish-ch yumish mashqi — ko’z namligini saqlaydi
               </p>
               <button 
                 onClick={startExercise}
@@ -122,7 +122,7 @@ export default function BlinkTrainer() {
               >
                 👁️
               </motion.div>
-              <p className="text-2xl font-bold text-white mb-2">Ko'zingizni OCHING</p>
+              <p className="text-2xl font-bold text-white mb-2">Ko’zingizni OCHING</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-mono font-bold text-emerald-400">{timer}</span>
                 <span className="text-slate-500">soniya</span>
@@ -153,7 +153,7 @@ export default function BlinkTrainer() {
               >
                 😌
               </motion.div>
-              <p className="text-2xl font-bold text-white mb-2">Ko'zingizni YUMING</p>
+              <p className="text-2xl font-bold text-white mb-2">Ko’zingizni YUMING</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-mono font-bold text-emerald-400">{timer}</span>
                 <span className="text-slate-500">soniya</span>

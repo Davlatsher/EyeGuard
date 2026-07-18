@@ -82,7 +82,7 @@ export default function FollowDot() {
             </div>
             <div>
               <h3 className="font-bold text-white">Nuqtani Kuzat</h3>
-              <p className="text-sm text-slate-400">Nuqtani bosib, ko'z mushaklaringizni mashq qiling</p>
+              <p className="text-sm text-slate-400">Nuqtani bosib, ko’z mushaklaringizni mashq qiling</p>
             </div>
           </div>
           <div className="text-right">
@@ -111,7 +111,7 @@ export default function FollowDot() {
                 👁️
               </motion.div>
               <p className="text-slate-400 mb-2 text-center px-8">
-                20 soniya ichida nuqtalarni bosib ko'z mushaklaringizni mashq qiling
+                20 soniya ichida nuqtalarni bosib ko’z mushaklaringizni mashq qiling
               </p>
               {bestScore > 0 && (
                 <div className="flex items-center gap-2 text-amber-400 mb-4">

@@ -1,19 +1,38 @@
 import { motion } from 'framer-motion';
-import { X, Clock, Eye } from 'lucide-react';
+import { X, Eye } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { resetTimer } from '../lib/tauri';
 
 export default function BreakOverlay() {
-  const { breakMode, breakDuration, hideOverlay, snooze, snoozeCount, maxSnooze } = useStore();
+  const { breakMode, breakDuration, hideOverlay, addBreakRecord, resetSnooze, snooze, snoozeCount, maxSnooze } =
+    useStore();
   const [timeLeft, setTimeLeft] = useState(breakDuration);
   const [showSnooze, setShowSnooze] = useState(true);
+  const recorded = useRef(false);
+
+  // Record the break exactly once, reset the backend countdown, then close.
+  const finish = (completed: boolean) => {
+    if (!recorded.current) {
+      recorded.current = true;
+      addBreakRecord({
+        id: Date.now().toString(),
+        time: new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' }),
+        duration: breakDuration,
+        completed,
+      });
+      resetSnooze();
+      void resetTimer();
+    }
+    hideOverlay();
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          hideOverlay();
+          finish(true);
           return 0;
         }
         return prev - 1;
@@ -21,13 +40,16 @@ export default function BreakOverlay() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [hideOverlay]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSnooze = () => {
     const success = snooze();
     if (!success) {
       setShowSnooze(false);
     } else {
+      // Snoozed: don’t count as a completed break.
+      recorded.current = true;
       hideOverlay();
     }
   };
@@ -59,7 +81,7 @@ export default function BreakOverlay() {
           >
             👁️
           </motion.div>
-          <h2 className="text-2xl font-bold text-white mb-2">Ko'zni dam oldiring!</h2>
+          <h2 className="text-2xl font-bold text-white mb-2">Ko’zni dam oldiring!</h2>
           <p className="text-slate-400 mb-6">
             20 soniya davomida 6 metr uzoqlikka qarang
           </p>
@@ -78,7 +100,7 @@ export default function BreakOverlay() {
               </button>
             )}
             <button
-              onClick={hideOverlay}
+              onClick={() => finish(true)}
               className="flex-1 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors"
             >
               Davom etish
@@ -108,7 +130,7 @@ export default function BreakOverlay() {
           </motion.div>
           <h2 className="text-3xl font-bold text-white mb-4">Dam olish vaqti!</h2>
           <p className="text-slate-400 mb-8 max-w-md mx-auto">
-            Ekran to'liq bloklangan. Ko'zlaringizni dam oldiring.
+            Ekran to’liq bloklangan. Ko’zlaringizni dam oldiring.
           </p>
 
           <div className="text-6xl font-mono font-bold text-sky-400 mb-8">
@@ -143,11 +165,11 @@ export default function BreakOverlay() {
         <div className="flex items-center gap-3">
           <Eye className="w-5 h-5 text-sky-400" />
           <div>
-            <p className="text-sm text-white font-medium">Ko'zni dam oldiring</p>
+            <p className="text-sm text-white font-medium">Ko’zni dam oldiring</p>
             <p className="text-xs text-slate-400">{formatTime(timeLeft)} qoldi</p>
           </div>
           <button
-            onClick={hideOverlay}
+            onClick={() => finish(false)}
             className="ml-2 p-1 hover:bg-slate-800 rounded-lg transition-colors"
           >
             <X size={16} className="text-slate-400" />

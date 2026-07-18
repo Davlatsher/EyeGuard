@@ -1,117 +1,99 @@
-use tauri::{AppHandle, Manager};
-use serde::{Deserialize, Serialize};
+use crate::database::{self, BreakRecord, DailyStat, Db, Settings, StatsSummary};
+use crate::notifications::send_break_notification;
+use tauri::{AppHandle, Emitter, Manager, State, WebviewUrl, WebviewWindowBuilder};
 
-#[derive(Serialize)]
-pub struct TimerStatus {
-    pub is_running: bool,
-    pub next_break_in: u64,
-    pub mode: String,
-}
-
-#[tauri::command]
-pub fn start_timer(mode: String) -> Result<String, String> {
-    Ok(format!("Timer started in {} mode", mode))
-}
-
-#[tauri::command]
-pub fn stop_timer() -> Result<String, String> {
-    Ok("Timer stopped".to_string())
-}
-
-#[tauri::command]
-pub fn get_timer_status() -> TimerStatus {
-    TimerStatus {
-        is_running: true,
-        next_break_in: 1200,
-        mode: "20-20-20".to_string(),
-    }
-}
-
+/// Ask the backend to fire a break notification now.
 #[tauri::command]
 pub fn show_notification(app: AppHandle, title: String, body: String) {
-    let _ = tauri::api::notification::Notification::new(
-        app.config().tauri.bundle.identifier.clone()
-    )
-    .title(title)
-    .body(body)
-    .show();
+    send_break_notification(&app, &title, &body);
 }
 
+/// Create the fullscreen always-on-top overlay window for strict breaks.
 #[tauri::command]
 pub fn create_overlay_window(app: AppHandle) -> Result<String, String> {
-    let overlay = tauri::WindowBuilder::new(
-        &app,
-        "overlay",
-        tauri::WindowUrl::App("index.html".into())
-    )
-    .fullscreen(true)
-    .always_on_top(true)
-    .transparent(true)
-    .decorations(false)
-    .build()
-    .map_err(|e| e.to_string())?;
+    if app.get_webview_window("overlay").is_some() {
+        return Ok("Overlay already open".into());
+    }
+    let overlay =
+        WebviewWindowBuilder::new(&app, "overlay", WebviewUrl::App("index.html".into()))
+            .title("EyeGuard — Break")
+            .fullscreen(true)
+            .always_on_top(true)
+            .transparent(true)
+            .decorations(false)
+            .skip_taskbar(true)
+            .build()
+            .map_err(|e| e.to_string())?;
 
     overlay.show().map_err(|e| e.to_string())?;
-    Ok("Overlay created".to_string())
+    Ok("Overlay created".into())
 }
 
 #[tauri::command]
 pub fn close_overlay_window(app: AppHandle) -> Result<String, String> {
-    if let Some(window) = app.get_window("overlay") {
+    if let Some(window) = app.get_webview_window("overlay") {
         window.close().map_err(|e| e.to_string())?;
     }
-    Ok("Overlay closed".to_string())
+    Ok("Overlay closed".into())
 }
 
 #[tauri::command]
-pub fn get_eye_health_score() -> u32 {
-    85
-}
-
-#[derive(Serialize)]
-pub struct DailyStats {
-    pub date: String,
-    pub breaks: u32,
-    pub score: u32,
+pub fn get_settings(db: State<'_, Db>) -> Result<Settings, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    Ok(database::load_settings(&conn))
 }
 
 #[tauri::command]
-pub fn get_daily_stats() -> Vec<DailyStats> {
-    vec![
-        DailyStats { date: "2026-07-12".to_string(), breaks: 8, score: 75 },
-        DailyStats { date: "2026-07-13".to_string(), breaks: 12, score: 85 },
-        DailyStats { date: "2026-07-14".to_string(), breaks: 10, score: 80 },
-    ]
+pub fn update_settings(db: State<'_, Db>, settings: Settings) -> Result<String, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    database::save_settings(&conn, &settings).map_err(|e| e.to_string())?;
+    Ok("Settings updated".into())
 }
 
 #[tauri::command]
-pub fn save_break_record(duration: u32, completed: bool, game: Option<String>) {
-    // Save to SQLite database
-    let _ = (duration, completed, game);
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Settings {
-    pub timer_mode: String,
-    pub break_mode: String,
-    pub break_duration: u32,
-    pub sound_enabled: bool,
-    pub notifications_enabled: bool,
-}
-
-#[tauri::command]
-pub fn get_settings() -> Settings {
-    Settings {
-        timer_mode: "20-20-20".to_string(),
-        break_mode: "gentle".to_string(),
-        break_duration: 20,
-        sound_enabled: true,
-        notifications_enabled: true,
-    }
+pub fn save_break_record(
+    db: State<'_, Db>,
+    app: AppHandle,
+    duration: u32,
+    completed: bool,
+    game: Option<String>,
+    score: Option<i64>,
+) -> Result<i64, String> {
+    let id = {
+        let conn = db.0.lock().map_err(|e| e.to_string())?;
+        database::insert_break(&conn, duration, completed, game, score)
+            .map_err(|e| e.to_string())?
+    };
+    // Notify any listeners (dashboard/analytics) that stats changed.
+    let _ = app.emit("stats-updated", ());
+    Ok(id)
 }
 
 #[tauri::command]
-pub fn update_settings(settings: Settings) -> Result<String, String> {
-    let _ = settings;
-    Ok("Settings updated".to_string())
+pub fn get_break_history(
+    db: State<'_, Db>,
+    limit: Option<u32>,
+) -> Result<Vec<BreakRecord>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    database::recent_breaks(&conn, limit.unwrap_or(50)).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_daily_stats(db: State<'_, Db>, days: Option<u32>) -> Result<Vec<DailyStat>, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    database::daily_stats(&conn, days.unwrap_or(7)).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_stats_summary(db: State<'_, Db>) -> Result<StatsSummary, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    database::stats_summary(&conn).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_eye_health_score(db: State<'_, Db>) -> Result<u32, String> {
+    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    Ok(database::stats_summary(&conn)
+        .map(|s| s.eye_health_score)
+        .unwrap_or(75))
 }

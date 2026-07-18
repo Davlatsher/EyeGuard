@@ -81,15 +81,15 @@ export default function Dashboard() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-lg font-semibold text-slate-300 mb-1">Ko'z salomatligi</h2>
+            <h2 className="text-lg font-semibold text-slate-300 mb-1">Ko’z salomatligi</h2>
             <div className="flex items-baseline gap-2">
               <span className={`text-5xl font-bold ${getHealthColor(eyeHealthScore)}`}>{eyeHealthScore}</span>
               <span className="text-slate-500 text-lg">/100</span>
             </div>
             <p className="text-sm text-slate-400 mt-1">
-              {eyeHealthScore >= 80 ? 'Ajoyib! Ko'zlaringiz yaxshi holatda' : 
-               eyeHealthScore >= 60 ? 'Yaxshi, lekin ko'proq dam oling' : 
-               'Ko'zlaringiz charchagan, tanaffus qiling!'}
+              {eyeHealthScore >= 80 ? 'Ajoyib! Ko’zlaringiz yaxshi holatda' : 
+               eyeHealthScore >= 60 ? 'Yaxshi, lekin ko’proq dam oling' : 
+               'Ko’zlaringiz charchagan, tanaffus qiling!'}
             </p>
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${isTimerRunning ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
-            <span className="text-xs text-slate-500">{isTimerRunning ? 'Faol' : 'To'xtatilgan'}</span>
+            <span className="text-xs text-slate-500">{isTimerRunning ? 'Faol' : 'To’xtatilgan'}</span>
           </div>
         </div>
 
@@ -139,7 +139,7 @@ export default function Dashboard() {
           >
             {formatTime(nextBreakIn)}
           </motion.div>
-          <p className="text-slate-500 mt-2">dan keyin ko'zni dam oldiring</p>
+          <p className="text-slate-500 mt-2">dan keyin ko’zni dam oldiring</p>
         </div>
 
         {/* Controls */}
@@ -153,7 +153,7 @@ export default function Dashboard() {
             }`}
           >
             {isTimerRunning ? <Pause size={18} /> : <Play size={18} />}
-            {isTimerRunning ? 'To'xtatish' : 'Davom ettirish'}
+            {isTimerRunning ? 'To’xtatish' : 'Davom ettirish'}
           </button>
           <button 
             onClick={() => showOverlay('break')}
@@ -172,7 +172,7 @@ export default function Dashboard() {
             breakMode === 'strict' ? 'bg-red-500/10 text-red-400' :
             'bg-purple-500/10 text-purple-400'
           }`}>
-            {breakMode === 'gentle' ? 'Yumshoq' : breakMode === 'strict' ? 'Qat'iy' : 'Kamuflyaj'}
+            {breakMode === 'gentle' ? 'Yumshoq' : breakMode === 'strict' ? 'Qat’iy' : 'Kamuflyaj'}
           </span>
         </div>
       </motion.div>
@@ -220,7 +220,7 @@ export default function Dashboard() {
             <h4 className="font-semibold text-indigo-300 mb-1">Maslahat</h4>
             <p className="text-sm text-slate-400">
               Har 20 daqiqada 20 fut (6 metr) uzoqlikka 20 soniya qarang. Bu 20-20-20 qoidasi 
-              ko'z mushaklaringizni charchashdan saqlaydi.
+              ko’z mushaklaringizni charchashdan saqlaydi.
             </p>
           </div>
         </div>

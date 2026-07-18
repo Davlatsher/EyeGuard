@@ -33,7 +33,7 @@ export default function Analytics() {
     <div className="space-y-6">
       <div className="mb-2">
         <h2 className="text-2xl font-bold text-white">Statistika</h2>
-        <p className="text-slate-400">Ko'z salomatligingizni kuzatib boring</p>
+        <p className="text-slate-400">Ko’z salomatligingizni kuzatib boring</p>
       </div>
 
       {/* Stats Cards */}
@@ -104,7 +104,7 @@ export default function Analytics() {
       >
         <div className="flex items-center gap-2 mb-4">
           <Calendar className="w-5 h-5 text-sky-400" />
-          <h3 className="font-semibold text-white">So'nggi tanaffuslar</h3>
+          <h3 className="font-semibold text-white">So’nggi tanaffuslar</h3>
         </div>
 
         <div className="space-y-3">
