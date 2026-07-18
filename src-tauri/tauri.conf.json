@@ -1,0 +1,71 @@
+{
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devPath": "http://localhost:5173",
+    "distDir": "../dist"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "window": {
+        "all": true,
+        "create": true,
+        "show": true,
+        "hide": true,
+        "close": true,
+        "setFullscreen": true,
+        "setAlwaysOnTop": true
+      },
+      "notification": {
+        "all": true
+      },
+      "shell": {
+        "all": false,
+        "open": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "HealthAndFitness",
+      "copyright": "2026 EyeGuard",
+      "identifier": "com.eyeguard.app",
+      "longDescription": "Windows uchun ko'z himoyasi ilovasi",
+      "shortDescription": "Ko'z himoyasi",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; font-src 'self';"
+    },
+    "updater": {
+      "active": true,
+      "endpoints": [],
+      "dialog": true,
+      "pubkey": ""
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 700,
+        "resizable": true,
+        "title": "EyeGuard",
+        "width": 1000,
+        "minWidth": 800,
+        "minHeight": 600,
+        "center": true,
+        "decorations": true,
+        "transparent": false,
+        "focus": true
+      }
+    ],
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    }
+  }
+}
