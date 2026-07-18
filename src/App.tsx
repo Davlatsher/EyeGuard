@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, Settings, BarChart3, Gamepad2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from './store/useStore';
-import { isTauri, onEvent } from './lib/tauri';
+import { isTauri, onEvent, createOverlayWindow } from './lib/tauri';
+import { playChime } from './lib/sound';
 import Dashboard from './components/Dashboard';
 import TimerSettings from './components/TimerSettings';
 import MiniGames from './components/MiniGames/MiniGames';
@@ -28,7 +29,13 @@ function App() {
       onEvent<number>('timer-tick', (secs) => useStore.getState().setNextBreakIn(secs)),
       onEvent<void>('break-due', () => {
         const s = useStore.getState();
-        if (!s.isOverlayVisible) s.showOverlay('break');
+        if (s.soundEnabled) playChime();
+        if (s.breakMode === 'strict') {
+          // Strict: open a real fullscreen, always-on-top OS window.
+          void createOverlayWindow();
+        } else if (!s.isOverlayVisible) {
+          s.showOverlay('break');
+        }
       }),
       onEvent<void>('stats-updated', () => void useStore.getState().refreshStats()),
     ];

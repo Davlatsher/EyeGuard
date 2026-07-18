@@ -42,10 +42,18 @@ pub fn interval_for_mode(mode: &str) -> u64 {
     }
 }
 
+/// Pause the countdown after this many seconds of user inactivity.
+const IDLE_THRESHOLD_SECS: u64 = 60;
+
 /// Background loop: ticks once per second, emits a `timer-tick` event, and
 /// fires a break (notification + `break-due` event) when the countdown reaches 0.
+///
+/// The countdown is held (not decremented) while the user is idle, in Do Not
+/// Disturb, or a fullscreen video/game/presentation is in the foreground — so
+/// EyeGuard never interrupts at the wrong moment.
 pub async fn run_timer_loop(app: AppHandle) {
     let state = app.state::<Arc<TimerState>>().inner().clone();
+    let mut was_paused = false;
 
     loop {
         sleep(Duration::from_secs(1)).await;
@@ -60,8 +68,20 @@ pub async fn run_timer_loop(app: AppHandle) {
                 Err(_) => false,
             }
         };
-        if dnd {
+        let paused = dnd
+            || crate::system::idle_seconds() >= IDLE_THRESHOLD_SECS
+            || crate::system::is_fullscreen_or_presenting();
+
+        if paused {
+            if !was_paused {
+                was_paused = true;
+                let _ = app.emit("timer-paused", true);
+            }
             continue;
+        }
+        if was_paused {
+            was_paused = false;
+            let _ = app.emit("timer-paused", false);
         }
 
         let remaining = state.remaining.load(Ordering::Relaxed);

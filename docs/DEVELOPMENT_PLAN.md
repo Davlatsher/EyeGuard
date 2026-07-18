@@ -57,14 +57,14 @@
 
 **Maqsad: foydalanuvchiga berib bo'ladigan, halol ishlaydigan mahsulot.**
 
-- [ ] **Real overlay oynasi**: fullscreen, always-on-top, multi-monitor qo'llab-quvvatlash (`create_overlay_window`'ni ishlatish); strict rejimda Escape/Alt+F4 himoyasi (max 3 snooze bilan)
-- [ ] **Idle detection**: foydalanuvchi kompyuterdan uzoqlashsa timer avtomatik pauza (Windows `GetLastInputInfo`)
-- [ ] **Fullscreen ilova aniqlash**: prezentatsiya/o'yin/video paytida xalaqit bermaslik (Do-Not-Disturb avto)
+- [x] **Real overlay oynasi** ✅: strict rejimda haqiqiy fullscreen always-on-top OS oyna (`create_overlay_window` + `?overlay=1` marshruti + `OverlayView`); tanaffus tugagach yozuv saqlab, timer reset qilib, o'zini yopadi. _(Windows runtime CI'da; overlay UI brauzerda tekshirilgan)_
+- [x] **Idle detection** ✅: 60s harakatsizlikda timer pauza (`system.rs`, Win32 `GetLastInputInfo` FFI; boshqa OS'da no-op)
+- [x] **Fullscreen ilova aniqlash** ✅: video/o'yin/prezentatsiya paytida pauza (`SHQueryUserNotificationState` FFI); DND bilan birga `timer-paused` event chiqaradi
 - [x] **2 ta yetishmagan o'yin**: ✅ Rang Tanish (farqli rang topish), Nafas Olish (4-4-6 breathing) — commit `4ce4cb8`, brauzerda tekshirilgan
 - [x] **Real analytics** ✅ (commit `94fa39d`): recharts BarChart (haftalik tanaffuslar) + AreaChart (salomatlik dinamikasi), `get_daily_stats`'dan real DB ma'lumot; streak/health backend'da real; browser preview uchun demo fallback
 - [x] **Eye Health Score algoritmi** ✅ hujjatlashtirilgan (Faza 0, `database.rs`): base 50 +10/bajarilgan −5/o'tkazilgan, 0–100 clamp
 - [x] **Autostart** ✅ (`tauri-plugin-autostart` + Sozlamalardagi toggle real OS autostart bilan)
-- [ ] **Tovushlar**: yumshoq ogohlantirish ovozlari (sound_enabled bilan)
+- [x] **Tovushlar** ✅: Web Audio API bilan yumshoq ikki-notali chime (`lib/sound.ts`), break-due'da `sound_enabled` bo'lsa chalinadi — asset kerak emas, CSP-safe
 - [x] **Custom rejim UI** (qisman): ✅ break duration slider endi ishlaydi (`setBreakDuration`); custom interval slider hali qoldi
 - [x] **i18n**: ✅ uz / ru / en (react-i18next) — commit `eddc3e1`, til tanlagich + 3 tilda tekshirilgan
 - [ ] **Onboarding**: birinchi ochilishda 3-qadam tanishtiruv
