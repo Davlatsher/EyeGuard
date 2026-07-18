@@ -35,19 +35,23 @@
 
 **Maqsad: loyiha kompilyatsiya bo'lsin, o'rnatilsin va asosiy sikl real ishlasin.**
 
-- [ ] **Tauri 2.x'ga to'liq migratsiya**
-  - `main.rs`: `SystemTray` → `tauri::tray::TrayIcon`, plugin arxitekturasi
-  - `notifications.rs`: `tauri-plugin-notification`
-  - `tauri.conf.json` → v2 format (`app`, `bundle`, capabilities/permissions)
-  - `tokio::main` o'rniga Tauri async runtime
-- [ ] **Ikonkalar to'plami** (`icons/`: 32x32, 128x128, icon.ico, icon.icns) — `tauri icon` generatori
-- [ ] **Frontend ↔ Backend ulash**: `@tauri-apps/api` `invoke()` orqali barcha 11 command; store'ga backend-sync qatlam
-- [ ] **SQLite real ishlashi**: `save_break_record`, `get_daily_stats`, `get_settings`/`update_settings` — to'liq CRUD; ulanish pool (tauri state ichida `Mutex<Connection>`)
-- [ ] **Sozlamalar persistensiyasi**: zustand `persist` + DB dual-write
-- [ ] **CI/CD**: GitHub Actions — `cargo check` + `tsc` + `vite build` + Windows bundle artifact
-- [ ] **Smoke testlar**: Rust unit (DB), vitest (store logikasi)
+> ✅ **BAJARILDI** (2026-07, commit `abb5d30`/`26f7841`). Tekshirildi: `cargo check` 0 ogohlantirish, 6 Rust unit-test o'tdi, frontend `tsc` + `vite build` muvaffaqiyatli.
 
-**Chiqish mezoni:** `npm run tauri:build` → ishlaydigan `.msi`, tanaffus sikli to'liq: timer → notification → overlay → yozuv DB'ga.
+- [x] **Tauri 2.x'ga to'liq migratsiya**
+  - `main.rs` + `lib.rs`: `SystemTray` → `TrayIconBuilder`, plugin arxitekturasi
+  - `notifications.rs`: `tauri-plugin-notification`
+  - `tauri.conf.json` → v2 format (`app`, `bundle`, `capabilities/default.json`)
+  - `#[tokio::main]` o'rniga Tauri async runtime (`tauri::async_runtime::spawn`)
+  - _Bonus:_ single-instance + autostart pluginlari
+- [x] **Ikonkalar to'plami** (`icons/`: 32x32, 128x128, icon.ico, icon.icns) — `tauri icon` generatori
+- [x] **Frontend ↔ Backend ulash**: `src/lib/tauri.ts` service qatlami — `invoke()` + event listener'lar (timer-tick / break-due / stats-updated), browser fallback bilan
+- [x] **SQLite real ishlashi**: to'liq CRUD (settings, break_records, daily_stats, streak, eye-health) — `Mutex<Connection>` tauri state ichida
+- [x] **Sozlamalar persistensiyasi**: store hydrate + har o'zgarishda DB'ga yozish
+- [x] **CI/CD**: GitHub Actions — `tsc` + `vite build` + `cargo fmt/check/test` + Windows bundle artifact
+- [x] **Smoke testlar**: 6 ta Rust unit-test (settings roundtrip, break CRUD, summary, daily_stats, streak, eye-health clamp)
+- [x] _Qo'shimcha topilma:_ o'zbekcha apostrof (`Ko'z`) JS string literallarni buzayotgani 9 faylda tuzatildi — kod ilgari **umuman kompilyatsiya bo'lmagan**
+
+**Chiqish mezoni:** `npm run tauri:build` → ishlaydigan `.msi`, tanaffus sikli to'liq: timer → notification → overlay → yozuv DB'ga. _(Windows bundle CI'da yig'iladi; Linux muhitida kod-daraja tekshiruvi bajarildi.)_
 
 ## 3. Faza 1 — Haqiqiy MVP (4–6 hafta) → v1.1 "Public Beta"
 
