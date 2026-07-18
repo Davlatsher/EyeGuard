@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import { X, Eye } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/useStore';
 import { useEffect, useRef, useState } from 'react';
 import { resetTimer } from '../lib/tauri';
 
 export default function BreakOverlay() {
+  const { t } = useTranslation();
   const { breakMode, breakDuration, hideOverlay, addBreakRecord, resetSnooze, snooze, snoozeCount, maxSnooze } =
     useStore();
   const [timeLeft, setTimeLeft] = useState(breakDuration);
@@ -81,10 +83,8 @@ export default function BreakOverlay() {
           >
             👁️
           </motion.div>
-          <h2 className="text-2xl font-bold text-white mb-2">Ko’zni dam oldiring!</h2>
-          <p className="text-slate-400 mb-6">
-            20 soniya davomida 6 metr uzoqlikka qarang
-          </p>
+          <h2 className="text-2xl font-bold text-white mb-2">{t('overlay.gentleTitle')}</h2>
+          <p className="text-slate-400 mb-6">{t('overlay.gentleBody')}</p>
 
           <div className="text-5xl font-mono font-bold text-sky-400 mb-6">
             {formatTime(timeLeft)}
@@ -96,14 +96,14 @@ export default function BreakOverlay() {
                 onClick={handleSnooze}
                 className="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors"
               >
-                Kechiktirish ({maxSnooze - snoozeCount})
+                {t('overlay.snooze', { count: maxSnooze - snoozeCount })}
               </button>
             )}
             <button
               onClick={() => finish(true)}
               className="flex-1 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors"
             >
-              Davom etish
+              {t('overlay.continue')}
             </button>
           </div>
         </motion.div>
@@ -128,10 +128,8 @@ export default function BreakOverlay() {
           >
             😌
           </motion.div>
-          <h2 className="text-3xl font-bold text-white mb-4">Dam olish vaqti!</h2>
-          <p className="text-slate-400 mb-8 max-w-md mx-auto">
-            Ekran to’liq bloklangan. Ko’zlaringizni dam oldiring.
-          </p>
+          <h2 className="text-3xl font-bold text-white mb-4">{t('overlay.strictTitle')}</h2>
+          <p className="text-slate-400 mb-8 max-w-md mx-auto">{t('overlay.strictBody')}</p>
 
           <div className="text-6xl font-mono font-bold text-sky-400 mb-8">
             {formatTime(timeLeft)}
@@ -165,8 +163,8 @@ export default function BreakOverlay() {
         <div className="flex items-center gap-3">
           <Eye className="w-5 h-5 text-sky-400" />
           <div>
-            <p className="text-sm text-white font-medium">Ko’zni dam oldiring</p>
-            <p className="text-xs text-slate-400">{formatTime(timeLeft)} qoldi</p>
+            <p className="text-sm text-white font-medium">{t('overlay.camouflageTitle')}</p>
+            <p className="text-xs text-slate-400">{t('overlay.camouflageLeft', { time: formatTime(timeLeft) })}</p>
           </div>
           <button
             onClick={() => finish(false)}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Trophy, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/useStore';
 
 interface Dot {
@@ -16,6 +17,7 @@ export default function FollowDot() {
   const [timeLeft, setTimeLeft] = useState(20);
   const [isPlaying, setIsPlaying] = useState(false);
   const [bestScore, setBestScore] = useState(0);
+  const { t } = useTranslation();
   const { incrementBreaks, addBreakRecord } = useStore();
 
   const generateDot = useCallback(() => {
@@ -81,8 +83,8 @@ export default function FollowDot() {
               <Target className="w-5 h-5 text-sky-400" />
             </div>
             <div>
-              <h3 className="font-bold text-white">Nuqtani Kuzat</h3>
-              <p className="text-sm text-slate-400">Nuqtani bosib, ko’z mushaklaringizni mashq qiling</p>
+              <h3 className="font-bold text-white">{t('games.followdot.title')}</h3>
+              <p className="text-sm text-slate-400">{t('games.followdot.header')}</p>
             </div>
           </div>
           <div className="text-right">
@@ -111,19 +113,19 @@ export default function FollowDot() {
                 👁️
               </motion.div>
               <p className="text-slate-400 mb-2 text-center px-8">
-                20 soniya ichida nuqtalarni bosib ko’z mushaklaringizni mashq qiling
+                {t('games.followdot.intro')}
               </p>
               {bestScore > 0 && (
                 <div className="flex items-center gap-2 text-amber-400 mb-4">
                   <Trophy size={16} />
-                  <span className="text-sm">Eng yaxshi: {bestScore} ball</span>
+                  <span className="text-sm">{t('games.followdot.best', { score: bestScore })}</span>
                 </div>
               )}
               <button 
                 onClick={startGame}
                 className="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
               >
-                Boshlash
+                {t('common.start')}
               </button>
             </motion.div>
           ) : (
@@ -190,14 +192,14 @@ export default function FollowDot() {
         >
           <div className="text-center">
             <div className="text-4xl mb-2">🎉</div>
-            <p className="text-xl font-bold text-emerald-400 mb-1">Ajoyib!</p>
-            <p className="text-slate-400 mb-4">{score} ta nuqta bosdingiz</p>
+            <p className="text-xl font-bold text-emerald-400 mb-1">{t('games.great')}</p>
+            <p className="text-slate-400 mb-4">{t('games.followdot.result', { score })}</p>
             <button 
               onClick={startGame}
               className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
             >
               <RotateCcw size={16} />
-              Qayta boshlash
+              {t('common.restart')}
             </button>
           </div>
         </motion.div>

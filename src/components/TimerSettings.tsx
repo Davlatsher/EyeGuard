@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
-import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power } from 'lucide-react';
+import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore, TimerMode, BreakMode } from '../store/useStore';
 import { setAutoStart } from '../lib/tauri';
+import { SUPPORTED_LANGUAGES, setLang, type LangCode } from '../i18n';
 
 export default function TimerSettings() {
+  const { t, i18n } = useTranslation();
   const {
     timerMode,
     breakMode,
@@ -14,30 +17,51 @@ export default function TimerSettings() {
     doNotDisturb,
     setTimerMode,
     setBreakMode,
+    setBreakDuration,
     toggleSetting,
   } = useStore();
 
   const modes: { id: TimerMode; label: string; desc: string; time: string }[] = [
-    { id: '20-20-20', label: '20-20-20', desc: 'Har 20 daqiqada 20 soniya', time: '20 min' },
-    { id: 'pomodoro', label: 'Pomodoro', desc: '25 min ishlash, 5 min dam', time: '25 min' },
-    { id: 'custom', label: 'Custom', desc: 'O’zingiz sozlang', time: '30 min' },
+    { id: '20-20-20', label: '20-20-20', desc: t('settings.mode2020Desc'), time: '20 min' },
+    { id: 'pomodoro', label: t('timerModes.pomodoro'), desc: t('settings.modePomodoroDesc'), time: '25 min' },
+    { id: 'custom', label: t('timerModes.custom'), desc: t('settings.modeCustomDesc'), time: '30 min' },
   ];
 
   const breakModes: { id: BreakMode; label: string; desc: string; color: string }[] = [
-    { id: 'gentle', label: 'Yumshoq', desc: 'Ogohlantirish + xira ekran', color: 'emerald' },
-    { id: 'strict', label: 'Qat’iy', desc: 'Ekran to’liq bloklanadi', color: 'red' },
-    { id: 'camouflage', label: 'Kamuflyaj', desc: 'Shaffof overlay', color: 'purple' },
+    { id: 'gentle', label: t('breakModes.gentle'), desc: t('settings.gentleDesc'), color: 'emerald' },
+    { id: 'strict', label: t('breakModes.strict'), desc: t('settings.strictDesc'), color: 'red' },
+    { id: 'camouflage', label: t('breakModes.camouflage'), desc: t('settings.camouflageDesc'), color: 'purple' },
   ];
 
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <h2 className="text-2xl font-bold text-white">Sozlamalar</h2>
-        <p className="text-slate-400">Ilovani o’zingizga moslang</p>
+        <h2 className="text-2xl font-bold text-white">{t('settings.title')}</h2>
+        <p className="text-slate-400">{t('settings.subtitle')}</p>
       </div>
 
+      {/* Language */}
+      <Section icon={<Globe className="w-5 h-5" />} title={t('settings.language')}>
+        <div className="grid grid-cols-3 gap-3">
+          {SUPPORTED_LANGUAGES.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => setLang(lang.code as LangCode)}
+              className={`flex items-center justify-center gap-2 p-3 rounded-2xl border transition-all ${
+                i18n.language === lang.code
+                  ? 'bg-sky-500/10 border-sky-500/50 text-sky-400'
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-600'
+              }`}
+            >
+              <span className="text-lg">{lang.flag}</span>
+              <span className="text-sm font-medium">{lang.label}</span>
+            </button>
+          ))}
+        </div>
+      </Section>
+
       {/* Timer Mode */}
-      <Section icon={<Timer className="w-5 h-5" />} title="Timer rejimi">
+      <Section icon={<Timer className="w-5 h-5" />} title={t('settings.timerMode')}>
         <div className="space-y-3">
           {modes.map((mode) => (
             <motion.button
@@ -75,7 +99,7 @@ export default function TimerSettings() {
       </Section>
 
       {/* Break Mode */}
-      <Section icon={<Shield className="w-5 h-5" />} title="Break rejimi">
+      <Section icon={<Shield className="w-5 h-5" />} title={t('settings.breakMode')}>
         <div className="space-y-3">
           {breakModes.map((mode) => (
             <motion.button
@@ -108,33 +132,33 @@ export default function TimerSettings() {
       </Section>
 
       {/* General Settings */}
-      <Section icon={<Sliders className="w-5 h-5" />} title="Umumiy sozlamalar">
+      <Section icon={<Sliders className="w-5 h-5" />} title={t('settings.general')}>
         <div className="space-y-2">
           <ToggleSetting
             icon={<Bell size={18} />}
-            label="Bildirishnomalar"
-            desc="Windows toast notification"
+            label={t('settings.notifications')}
+            desc={t('settings.notificationsDesc')}
             enabled={notificationsEnabled}
             onToggle={() => toggleSetting('notificationsEnabled')}
           />
           <ToggleSetting
             icon={<Volume2 size={18} />}
-            label="Tovush"
-            desc="Ogohlantirish tovushlari"
+            label={t('settings.sound')}
+            desc={t('settings.soundDesc')}
             enabled={soundEnabled}
             onToggle={() => toggleSetting('soundEnabled')}
           />
           <ToggleSetting
             icon={<Moon size={18} />}
-            label="Do Not Disturb"
-            desc="Barcha ogohlantirishlarni o’chirish"
+            label={t('settings.dnd')}
+            desc={t('settings.dndDesc')}
             enabled={doNotDisturb}
             onToggle={() => toggleSetting('doNotDisturb')}
           />
           <ToggleSetting
             icon={<Power size={18} />}
-            label="Avto-ishga tushirish"
-            desc="Windows bilan birga ochilsin"
+            label={t('settings.autostart')}
+            desc={t('settings.autostartDesc')}
             enabled={autoStart}
             onToggle={() => {
               void setAutoStart(!autoStart);
@@ -145,18 +169,20 @@ export default function TimerSettings() {
       </Section>
 
       {/* Break Duration */}
-      <Section icon={<Timer className="w-5 h-5" />} title="Tanaffus davomiyligi">
+      <Section icon={<Timer className="w-5 h-5" />} title={t('settings.breakDuration')}>
         <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-slate-300">Davomiylik</span>
-            <span className="text-sky-400 font-mono font-bold">{breakDuration} soniya</span>
+            <span className="text-slate-300">{t('settings.duration')}</span>
+            <span className="text-sky-400 font-mono font-bold">
+              {breakDuration} {t('common.seconds')}
+            </span>
           </div>
           <input
             type="range"
             min="10"
             max="60"
             value={breakDuration}
-            readOnly
+            onChange={(e) => setBreakDuration(Number(e.target.value))}
             className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-sky-500"
           />
           <div className="flex justify-between text-xs text-slate-500 mt-2">

@@ -1,0 +1,161 @@
+{
+  "common": {
+    "start": "Start",
+    "restart": "Restart",
+    "seconds": "seconds",
+    "minute": "minute"
+  },
+  "header": {
+    "subtitle": "Eye protection app"
+  },
+  "nav": {
+    "dashboard": "Home",
+    "games": "Games",
+    "analytics": "Stats",
+    "settings": "Settings"
+  },
+  "timerModes": {
+    "20-20-20": "20-20-20",
+    "pomodoro": "Pomodoro",
+    "custom": "Custom"
+  },
+  "breakModes": {
+    "gentle": "Gentle",
+    "strict": "Strict",
+    "camouflage": "Camouflage"
+  },
+  "dashboard": {
+    "eyeHealth": "Eye health",
+    "healthGood": "Excellent! Your eyes are in great shape",
+    "healthMedium": "Good, but rest more often",
+    "healthBad": "Your eyes are tired, take a break!",
+    "nextBreak": "Next break",
+    "modeLabel": "{{mode}} mode",
+    "active": "Active",
+    "paused": "Paused",
+    "breakCountdown": "until your eye break",
+    "pause": "Pause",
+    "resume": "Resume",
+    "breakNow": "Break now",
+    "modePrefix": "Mode:",
+    "todayBreaks": "Breaks today",
+    "streak": "Daily streak",
+    "totalBreaks": "Total breaks",
+    "minutesLeft": "Minutes left",
+    "tipTitle": "Tip",
+    "tipBody": "Every 20 minutes, look at something 20 feet (6 meters) away for 20 seconds. This 20-20-20 rule keeps your eye muscles from getting tired."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize the app for yourself",
+    "timerMode": "Timer mode",
+    "breakMode": "Break mode",
+    "general": "General settings",
+    "breakDuration": "Break duration",
+    "duration": "Duration",
+    "language": "Language",
+    "notifications": "Notifications",
+    "notificationsDesc": "Windows toast notification",
+    "sound": "Sound",
+    "soundDesc": "Alert sounds",
+    "dnd": "Do Not Disturb",
+    "dndDesc": "Turn off all alerts",
+    "autostart": "Auto-start",
+    "autostartDesc": "Launch with Windows",
+    "mode2020Desc": "20 seconds every 20 minutes",
+    "modePomodoroDesc": "25 min work, 5 min rest",
+    "modeCustomDesc": "Set it yourself",
+    "gentleDesc": "Alert + dimmed screen",
+    "strictDesc": "Screen is fully blocked",
+    "camouflageDesc": "Transparent overlay"
+  },
+  "analytics": {
+    "title": "Statistics",
+    "subtitle": "Track your eye health",
+    "healthScore": "Health Score",
+    "streak": "Daily streak",
+    "todayBreaks": "Breaks today",
+    "totalBreaks": "Total breaks",
+    "weekly": "Weekly statistics",
+    "recentBreaks": "Recent breaks",
+    "break": "Break",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    }
+  },
+  "games": {
+    "title": "Eye Exercises",
+    "subtitle": "Games to rest your eyes",
+    "back": "Back to games",
+    "durationSeconds": "{{count}} seconds",
+    "durationMinute": "{{count}} minute",
+    "great": "Excellent!",
+    "followdot": {
+      "title": "Follow the Dot",
+      "desc": "Follow the moving dot on screen and train your eye muscles",
+      "benefits": "Eye muscles",
+      "header": "Tap the dot and train your eye muscles",
+      "intro": "Tap the dots for 20 seconds to train your eye muscles",
+      "best": "Best: {{score}} points",
+      "result": "You tapped {{score}} dots"
+    },
+    "blink": {
+      "title": "Blink Trainer",
+      "desc": "A blink exercise with animation",
+      "benefits": "Eye moisture",
+      "header": "Blink Exercise",
+      "headerDesc": "10 blinks to keep your eyes moist",
+      "intro": "A blink exercise — keeps your eyes moist",
+      "open": "OPEN your eyes",
+      "close": "CLOSE your eyes",
+      "result": "You completed 10 exercises"
+    },
+    "focus": {
+      "title": "Focus Shift",
+      "desc": "Shift focus between near and far points",
+      "benefits": "Accommodation",
+      "intro": "Shifting focus between near and far points trains the accommodation muscles",
+      "near": "Bring your eyes closer to the screen",
+      "far": "Look 6 meters away",
+      "nearLabel": "NEAR",
+      "farLabel": "FAR",
+      "result": "You completed 10 focus shifts"
+    },
+    "color": {
+      "title": "Color Match",
+      "desc": "Find the tile with a different color",
+      "benefits": "Eye rest",
+      "intro": "Distinguishing color differences trains the retina. The difference shrinks each round.",
+      "roundLabel": "{{current}} / {{total}} round",
+      "resultFirst": "You found {{score}} / {{total}} rounds on the first try",
+      "resultRest": "Your eyes got a rest"
+    },
+    "breathing": {
+      "title": "Breathing",
+      "desc": "Relax your eyes along with your breathing",
+      "benefits": "Overall rest",
+      "intro": "The 4-4-6 breathing rhythm calms the nervous system and reduces eye strain",
+      "inhale": "Breathe in",
+      "hold": "Hold",
+      "exhale": "Breathe out",
+      "cycleLabel": "{{current}} / {{total}} cycle",
+      "result": "You completed {{total}} breathing cycles"
+    }
+  },
+  "overlay": {
+    "gentleTitle": "Rest your eyes!",
+    "gentleBody": "Look 6 meters away for 20 seconds",
+    "snooze": "Snooze ({{count}})",
+    "continue": "Continue",
+    "strictTitle": "Break time!",
+    "strictBody": "The screen is fully blocked. Rest your eyes.",
+    "camouflageTitle": "Rest your eyes",
+    "camouflageLeft": "{{time}} left"
+  }
+}

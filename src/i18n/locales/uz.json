@@ -1,0 +1,161 @@
+{
+  "common": {
+    "start": "Boshlash",
+    "restart": "Qayta boshlash",
+    "seconds": "soniya",
+    "minute": "daqiqa"
+  },
+  "header": {
+    "subtitle": "Ko’z himoyasi ilovasi"
+  },
+  "nav": {
+    "dashboard": "Asosiy",
+    "games": "O’yinlar",
+    "analytics": "Statistika",
+    "settings": "Sozlamalar"
+  },
+  "timerModes": {
+    "20-20-20": "20-20-20",
+    "pomodoro": "Pomodoro",
+    "custom": "Custom"
+  },
+  "breakModes": {
+    "gentle": "Yumshoq",
+    "strict": "Qat’iy",
+    "camouflage": "Kamuflyaj"
+  },
+  "dashboard": {
+    "eyeHealth": "Ko’z salomatligi",
+    "healthGood": "Ajoyib! Ko’zlaringiz yaxshi holatda",
+    "healthMedium": "Yaxshi, lekin ko’proq dam oling",
+    "healthBad": "Ko’zlaringiz charchagan, tanaffus qiling!",
+    "nextBreak": "Keyingi tanaffus",
+    "modeLabel": "{{mode}} rejimi",
+    "active": "Faol",
+    "paused": "To’xtatilgan",
+    "breakCountdown": "dan keyin ko’zni dam oldiring",
+    "pause": "To’xtatish",
+    "resume": "Davom ettirish",
+    "breakNow": "Hozir tanaffus",
+    "modePrefix": "Rejim:",
+    "todayBreaks": "Bugungi tanaffuslar",
+    "streak": "Kunlik streak",
+    "totalBreaks": "Jami tanaffuslar",
+    "minutesLeft": "Daqiqa qoldi",
+    "tipTitle": "Maslahat",
+    "tipBody": "Har 20 daqiqada 20 fut (6 metr) uzoqlikka 20 soniya qarang. Bu 20-20-20 qoidasi ko’z mushaklaringizni charchashdan saqlaydi."
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "subtitle": "Ilovani o’zingizga moslang",
+    "timerMode": "Timer rejimi",
+    "breakMode": "Break rejimi",
+    "general": "Umumiy sozlamalar",
+    "breakDuration": "Tanaffus davomiyligi",
+    "duration": "Davomiylik",
+    "language": "Til",
+    "notifications": "Bildirishnomalar",
+    "notificationsDesc": "Windows toast notification",
+    "sound": "Tovush",
+    "soundDesc": "Ogohlantirish tovushlari",
+    "dnd": "Do Not Disturb",
+    "dndDesc": "Barcha ogohlantirishlarni o’chirish",
+    "autostart": "Avto-ishga tushirish",
+    "autostartDesc": "Windows bilan birga ochilsin",
+    "mode2020Desc": "Har 20 daqiqada 20 soniya",
+    "modePomodoroDesc": "25 min ishlash, 5 min dam",
+    "modeCustomDesc": "O’zingiz sozlang",
+    "gentleDesc": "Ogohlantirish + xira ekran",
+    "strictDesc": "Ekran to’liq bloklanadi",
+    "camouflageDesc": "Shaffof overlay"
+  },
+  "analytics": {
+    "title": "Statistika",
+    "subtitle": "Ko’z salomatligingizni kuzatib boring",
+    "healthScore": "Health Score",
+    "streak": "Kunlik streak",
+    "todayBreaks": "Bugun tanaffus",
+    "totalBreaks": "Jami tanaffus",
+    "weekly": "Haftalik statistika",
+    "recentBreaks": "So’nggi tanaffuslar",
+    "break": "Tanaffus",
+    "days": {
+      "mon": "Du",
+      "tue": "Se",
+      "wed": "Ch",
+      "thu": "Pa",
+      "fri": "Ju",
+      "sat": "Sh",
+      "sun": "Ya"
+    }
+  },
+  "games": {
+    "title": "Ko’z Mashqlari",
+    "subtitle": "Ko’zlaringizni dam oldirish uchun o’yinlar",
+    "back": "O’yinlarga qaytish",
+    "durationSeconds": "{{count}} soniya",
+    "durationMinute": "{{count}} daqiqa",
+    "great": "Ajoyib!",
+    "followdot": {
+      "title": "Nuqtani Kuzat",
+      "desc": "Ekranda harakatlanuvchi nuqtani kuzatib ko’z mushaklaringizni mashq qiling",
+      "benefits": "Ko’z mushaklari",
+      "header": "Nuqtani bosib, ko’z mushaklaringizni mashq qiling",
+      "intro": "20 soniya ichida nuqtalarni bosib ko’z mushaklaringizni mashq qiling",
+      "best": "Eng yaxshi: {{score}} ball",
+      "result": "{{score}} ta nuqta bosdingiz"
+    },
+    "blink": {
+      "title": "Ko’z Yumish",
+      "desc": "Animatsiya bilan ko’zni yumish-ochish mashqi",
+      "benefits": "Ko’z namligi",
+      "header": "Ko’z Yumish Mashqi",
+      "headerDesc": "Ko’zingizni namlab turish uchun 10 marta yumish-ochish",
+      "intro": "Ko’zni yumish-ochish mashqi — ko’z namligini saqlaydi",
+      "open": "Ko’zingizni OCHING",
+      "close": "Ko’zingizni YUMING",
+      "result": "10 ta mashqni tugatdingiz"
+    },
+    "focus": {
+      "title": "Fokus Almashtirish",
+      "desc": "Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartiring",
+      "benefits": "Akkomodatsiya",
+      "intro": "Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartirish akkomodatsiya mushaklarini mashq qiladi",
+      "near": "Ko’zingizni ekranga yaqinlashtiring",
+      "far": "6 metr uzoqlikka qarang",
+      "nearLabel": "YAQIN",
+      "farLabel": "UZOQ",
+      "result": "10 ta fokus almashtirishni tugatdingiz"
+    },
+    "color": {
+      "title": "Rang Tanish",
+      "desc": "Boshqacha rangdagi katakni toping",
+      "benefits": "Ko’z dam olish",
+      "intro": "Rang farqlarini ajratish ko’z retinasini mashq qiladi. Har raundda farq kichrayadi.",
+      "roundLabel": "{{current}} / {{total}} raund",
+      "resultFirst": "{{score}} / {{total}} raundni birinchi urinishda topdingiz",
+      "resultRest": "Ko’zlaringiz dam oldi"
+    },
+    "breathing": {
+      "title": "Nafas Olish",
+      "desc": "Nafas bilan birga ko’zlaringizni bo’shashtiring",
+      "benefits": "Umumiy dam olish",
+      "intro": "4-4-6 nafas ritmi asab tizimini tinchlantiradi va ko’z zo’riqishini kamaytiradi",
+      "inhale": "Nafas oling",
+      "hold": "Ushlab turing",
+      "exhale": "Chiqaring",
+      "cycleLabel": "{{current}} / {{total}} tsikl",
+      "result": "{{total}} tsikl nafas mashqini tugatdingiz"
+    }
+  },
+  "overlay": {
+    "gentleTitle": "Ko’zni dam oldiring!",
+    "gentleBody": "20 soniya davomida 6 metr uzoqlikka qarang",
+    "snooze": "Kechiktirish ({{count}})",
+    "continue": "Davom etish",
+    "strictTitle": "Dam olish vaqti!",
+    "strictBody": "Ekran to’liq bloklangan. Ko’zlaringizni dam oldiring.",
+    "camouflageTitle": "Ko’zni dam oldiring",
+    "camouflageLeft": "{{time}} qoldi"
+  }
+}

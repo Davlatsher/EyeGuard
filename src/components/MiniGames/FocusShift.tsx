@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Focus, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/useStore';
 
 export default function FocusShift() {
   const [phase, setPhase] = useState<'idle' | 'near' | 'far' | 'complete'>('idle');
   const [count, setCount] = useState(0);
   const [timer, setTimer] = useState(0);
+  const { t } = useTranslation();
   const { incrementBreaks, addBreakRecord } = useStore();
 
   const startExercise = () => {
@@ -71,8 +73,8 @@ export default function FocusShift() {
             <Focus className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Fokus Almashtirish</h3>
-            <p className="text-sm text-slate-400">Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartiring</p>
+            <h3 className="font-bold text-white">{t('games.focus.title')}</h3>
+            <p className="text-sm text-slate-400">{t('games.focus.desc')}</p>
           </div>
         </div>
       </div>
@@ -96,13 +98,13 @@ export default function FocusShift() {
                 🔍
               </motion.div>
               <p className="text-slate-400 mb-6 max-w-xs mx-auto">
-                Yaqin va uzoq nuqtalar o’rtasida fokusni o’zgartirish akkomodatsiya mushaklarini mashq qiladi
+                {t('games.focus.intro')}
               </p>
               <button 
                 onClick={startExercise}
                 className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
               >
-                Boshlash
+                {t('common.start')}
               </button>
             </motion.div>
           )}
@@ -128,13 +130,13 @@ export default function FocusShift() {
                   transition={{ duration: 1, repeat: Infinity }}
                   className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-amber-400 text-sm font-medium"
                 >
-                  YAQIN
+                  {t('games.focus.nearLabel')}
                 </motion.div>
               </motion.div>
-              <p className="text-xl font-bold text-white mb-2">Ko’zingizni ekranga yaqinlashtiring</p>
+              <p className="text-xl font-bold text-white mb-2">{t('games.focus.near')}</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-mono font-bold text-amber-400">{timer}</span>
-                <span className="text-slate-500">soniya</span>
+                <span className="text-slate-500">{t('common.seconds')}</span>
               </div>
               <div className="mt-6 flex items-center justify-center gap-1">
                 {Array.from({ length: 10 }).map((_, i) => (
@@ -168,13 +170,13 @@ export default function FocusShift() {
                   transition={{ duration: 1, repeat: Infinity }}
                   className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-sky-400 text-sm font-medium"
                 >
-                  UZOQ
+                  {t('games.focus.farLabel')}
                 </motion.div>
               </motion.div>
-              <p className="text-xl font-bold text-white mb-2">6 metr uzoqlikka qarang</p>
+              <p className="text-xl font-bold text-white mb-2">{t('games.focus.far')}</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-mono font-bold text-sky-400">{timer}</span>
-                <span className="text-slate-500">soniya</span>
+                <span className="text-slate-500">{t('common.seconds')}</span>
               </div>
               <div className="mt-6 flex items-center justify-center gap-1">
                 {Array.from({ length: 10 }).map((_, i) => (
@@ -201,14 +203,14 @@ export default function FocusShift() {
               >
                 🎉
               </motion.div>
-              <p className="text-2xl font-bold text-amber-400 mb-2">Ajoyib!</p>
-              <p className="text-slate-400 mb-6">10 ta fokus almashtirishni tugatdingiz</p>
+              <p className="text-2xl font-bold text-amber-400 mb-2">{t('games.great')}</p>
+              <p className="text-slate-400 mb-6">{t('games.focus.result')}</p>
               <button 
                 onClick={() => setPhase('idle')}
                 className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
               >
                 <RotateCcw size={16} />
-                Qayta boshlash
+                {t('common.restart')}
               </button>
             </motion.div>
           )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, Settings, BarChart3, Gamepad2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from './store/useStore';
 import { isTauri, onEvent } from './lib/tauri';
 import Dashboard from './components/Dashboard';
@@ -12,6 +13,7 @@ import BreakOverlay from './components/BreakOverlay';
 type Tab = 'dashboard' | 'settings' | 'games' | 'analytics';
 
 function App() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const { isTimerRunning, timerMode, nextBreakIn, isOverlayVisible, decrementNextBreak } = useStore();
 
@@ -78,7 +80,7 @@ function App() {
             </motion.div>
             <div>
               <h1 className="text-xl font-bold text-white">EyeGuard</h1>
-              <p className="text-xs text-slate-400">Ko’z himoyasi ilovasi</p>
+              <p className="text-xs text-slate-400">{t('header.subtitle')}</p>
             </div>
           </div>
 
@@ -116,29 +118,29 @@ function App() {
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-20 bg-slate-900/90 backdrop-blur-xl border-t border-slate-800 px-6 py-2">
         <div className="flex justify-around max-w-lg mx-auto">
-          <NavButton 
-            icon={<Eye size={20} />} 
-            label="Asosiy" 
-            isActive={activeTab === 'dashboard'} 
-            onClick={() => setActiveTab('dashboard')} 
+          <NavButton
+            icon={<Eye size={20} />}
+            label={t('nav.dashboard')}
+            isActive={activeTab === 'dashboard'}
+            onClick={() => setActiveTab('dashboard')}
           />
-          <NavButton 
-            icon={<Gamepad2 size={20} />} 
-            label="O’yinlar" 
-            isActive={activeTab === 'games'} 
-            onClick={() => setActiveTab('games')} 
+          <NavButton
+            icon={<Gamepad2 size={20} />}
+            label={t('nav.games')}
+            isActive={activeTab === 'games'}
+            onClick={() => setActiveTab('games')}
           />
-          <NavButton 
-            icon={<BarChart3 size={20} />} 
-            label="Statistika" 
-            isActive={activeTab === 'analytics'} 
-            onClick={() => setActiveTab('analytics')} 
+          <NavButton
+            icon={<BarChart3 size={20} />}
+            label={t('nav.analytics')}
+            isActive={activeTab === 'analytics'}
+            onClick={() => setActiveTab('analytics')}
           />
-          <NavButton 
-            icon={<Settings size={20} />} 
-            label="Sozlamalar" 
-            isActive={activeTab === 'settings'} 
-            onClick={() => setActiveTab('settings')} 
+          <NavButton
+            icon={<Settings size={20} />}
+            label={t('nav.settings')}
+            isActive={activeTab === 'settings'}
+            onClick={() => setActiveTab('settings')}
           />
         </div>
       </nav>

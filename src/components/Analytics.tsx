@@ -1,18 +1,29 @@
 import { motion } from 'framer-motion';
 import { BarChart3, TrendingUp, Calendar, Award, Eye, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/useStore';
 
+/** Map internal game ids (stored in the DB) to translation keys. */
+const GAME_TITLE_KEY: Record<string, string> = {
+  FollowDot: 'games.followdot.title',
+  BlinkTrainer: 'games.blink.title',
+  FocusShift: 'games.focus.title',
+  ColorMatch: 'games.color.title',
+  Breathing: 'games.breathing.title',
+};
+
 export default function Analytics() {
+  const { t } = useTranslation();
   const { eyeHealthScore, todayBreaks, streak, totalBreaks, breakHistory } = useStore();
 
   const weeklyData = [
-    { day: 'Du', breaks: 8, score: 75 },
-    { day: 'Se', breaks: 12, score: 85 },
-    { day: 'Ch', breaks: 10, score: 80 },
-    { day: 'Pa', breaks: 6, score: 65 },
-    { day: 'Ju', breaks: 14, score: 90 },
-    { day: 'Sh', breaks: 9, score: 78 },
-    { day: 'Ya', breaks: todayBreaks, score: eyeHealthScore },
+    { day: t('analytics.days.mon'), breaks: 8, score: 75 },
+    { day: t('analytics.days.tue'), breaks: 12, score: 85 },
+    { day: t('analytics.days.wed'), breaks: 10, score: 80 },
+    { day: t('analytics.days.thu'), breaks: 6, score: 65 },
+    { day: t('analytics.days.fri'), breaks: 14, score: 90 },
+    { day: t('analytics.days.sat'), breaks: 9, score: 78 },
+    { day: t('analytics.days.sun'), breaks: todayBreaks, score: eyeHealthScore },
   ];
 
   const getScoreColor = (score: number) => {
@@ -32,8 +43,8 @@ export default function Analytics() {
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <h2 className="text-2xl font-bold text-white">Statistika</h2>
-        <p className="text-slate-400">Ko’z salomatligingizni kuzatib boring</p>
+        <h2 className="text-2xl font-bold text-white">{t('analytics.title')}</h2>
+        <p className="text-slate-400">{t('analytics.subtitle')}</p>
       </div>
 
       {/* Stats Cards */}
@@ -41,25 +52,25 @@ export default function Analytics() {
         <StatCard
           icon={<Eye className="w-5 h-5" />}
           value={eyeHealthScore}
-          label="Health Score"
+          label={t('analytics.healthScore')}
           color="sky"
         />
         <StatCard
           icon={<TrendingUp className="w-5 h-5" />}
           value={streak}
-          label="Kunlik streak"
+          label={t('analytics.streak')}
           color="amber"
         />
         <StatCard
           icon={<Clock className="w-5 h-5" />}
           value={todayBreaks}
-          label="Bugun tanaffus"
+          label={t('analytics.todayBreaks')}
           color="emerald"
         />
         <StatCard
           icon={<Award className="w-5 h-5" />}
           value={totalBreaks}
-          label="Jami tanaffus"
+          label={t('analytics.totalBreaks')}
           color="purple"
         />
       </div>
@@ -73,7 +84,7 @@ export default function Analytics() {
       >
         <div className="flex items-center gap-2 mb-6">
           <BarChart3 className="w-5 h-5 text-sky-400" />
-          <h3 className="font-semibold text-white">Haftalik statistika</h3>
+          <h3 className="font-semibold text-white">{t('analytics.weekly')}</h3>
         </div>
 
         <div className="h-48 flex items-end justify-between gap-2">
@@ -104,7 +115,7 @@ export default function Analytics() {
       >
         <div className="flex items-center gap-2 mb-4">
           <Calendar className="w-5 h-5 text-sky-400" />
-          <h3 className="font-semibold text-white">So’nggi tanaffuslar</h3>
+          <h3 className="font-semibold text-white">{t('analytics.recentBreaks')}</h3>
         </div>
 
         <div className="space-y-3">
@@ -117,9 +128,13 @@ export default function Analytics() {
                 <div className={`w-2 h-2 rounded-full ${record.completed ? 'bg-emerald-400' : 'bg-red-400'}`} />
                 <div>
                   <div className="text-sm text-white font-medium">
-                    {record.gamePlayed || 'Tanaffus'}
+                    {record.gamePlayed
+                      ? t(GAME_TITLE_KEY[record.gamePlayed] ?? record.gamePlayed)
+                      : t('analytics.break')}
                   </div>
-                  <div className="text-xs text-slate-500">{record.duration} soniya</div>
+                  <div className="text-xs text-slate-500">
+                    {record.duration} {t('common.seconds')}
+                  </div>
                 </div>
               </div>
               <span className="text-sm text-slate-400 font-mono">{record.time}</span>

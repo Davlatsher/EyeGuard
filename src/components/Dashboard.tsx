@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import { Eye, Clock, Zap, Trophy, Play, Pause, RotateCcw, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/useStore';
 import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
-  const { 
+  const { t } = useTranslation();
+  const {
     eyeHealthScore, 
     todayBreaks, 
     streak, 
@@ -81,15 +83,17 @@ export default function Dashboard() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-lg font-semibold text-slate-300 mb-1">Ko’z salomatligi</h2>
+            <h2 className="text-lg font-semibold text-slate-300 mb-1">{t('dashboard.eyeHealth')}</h2>
             <div className="flex items-baseline gap-2">
               <span className={`text-5xl font-bold ${getHealthColor(eyeHealthScore)}`}>{eyeHealthScore}</span>
               <span className="text-slate-500 text-lg">/100</span>
             </div>
             <p className="text-sm text-slate-400 mt-1">
-              {eyeHealthScore >= 80 ? 'Ajoyib! Ko’zlaringiz yaxshi holatda' : 
-               eyeHealthScore >= 60 ? 'Yaxshi, lekin ko’proq dam oling' : 
-               'Ko’zlaringiz charchagan, tanaffus qiling!'}
+              {eyeHealthScore >= 80
+                ? t('dashboard.healthGood')
+                : eyeHealthScore >= 60
+                  ? t('dashboard.healthMedium')
+                  : t('dashboard.healthBad')}
             </p>
           </div>
         </div>
@@ -108,13 +112,13 @@ export default function Dashboard() {
               <Clock className="w-5 h-5 text-sky-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-white">Keyingi tanaffus</h3>
-              <p className="text-sm text-slate-500">{timerMode} rejimi</p>
+              <h3 className="font-semibold text-white">{t('dashboard.nextBreak')}</h3>
+              <p className="text-sm text-slate-500">{t('dashboard.modeLabel', { mode: timerMode })}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${isTimerRunning ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
-            <span className="text-xs text-slate-500">{isTimerRunning ? 'Faol' : 'To’xtatilgan'}</span>
+            <span className="text-xs text-slate-500">{isTimerRunning ? t('dashboard.active') : t('dashboard.paused')}</span>
           </div>
         </div>
 
@@ -139,7 +143,7 @@ export default function Dashboard() {
           >
             {formatTime(nextBreakIn)}
           </motion.div>
-          <p className="text-slate-500 mt-2">dan keyin ko’zni dam oldiring</p>
+          <p className="text-slate-500 mt-2">{t('dashboard.breakCountdown')}</p>
         </div>
 
         {/* Controls */}
@@ -153,54 +157,54 @@ export default function Dashboard() {
             }`}
           >
             {isTimerRunning ? <Pause size={18} /> : <Play size={18} />}
-            {isTimerRunning ? 'To’xtatish' : 'Davom ettirish'}
+            {isTimerRunning ? t('dashboard.pause') : t('dashboard.resume')}
           </button>
-          <button 
+          <button
             onClick={() => showOverlay('break')}
             className="flex-1 flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-semibold transition-colors"
           >
             <Sparkles size={18} />
-            Hozir tanaffus
+            {t('dashboard.breakNow')}
           </button>
         </div>
 
         {/* Break mode indicator */}
         <div className="mt-4 flex items-center justify-center gap-2 text-sm text-slate-500">
-          <span>Rejim:</span>
+          <span>{t('dashboard.modePrefix')}</span>
           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
             breakMode === 'gentle' ? 'bg-emerald-500/10 text-emerald-400' :
             breakMode === 'strict' ? 'bg-red-500/10 text-red-400' :
             'bg-purple-500/10 text-purple-400'
           }`}>
-            {breakMode === 'gentle' ? 'Yumshoq' : breakMode === 'strict' ? 'Qat’iy' : 'Kamuflyaj'}
+            {t(`breakModes.${breakMode}`)}
           </span>
         </div>
       </motion.div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-4">
-        <StatCard 
+        <StatCard
           icon={<Zap className="w-5 h-5 text-amber-400" />}
           value={todayBreaks}
-          label="Bugungi tanaffuslar"
+          label={t('dashboard.todayBreaks')}
           color="amber"
         />
-        <StatCard 
+        <StatCard
           icon={<Trophy className="w-5 h-5 text-purple-400" />}
           value={streak}
-          label="Kunlik streak"
+          label={t('dashboard.streak')}
           color="purple"
         />
-        <StatCard 
+        <StatCard
           icon={<Eye className="w-5 h-5 text-sky-400" />}
           value={totalBreaks}
-          label="Jami tanaffuslar"
+          label={t('dashboard.totalBreaks')}
           color="sky"
         />
-        <StatCard 
+        <StatCard
           icon={<RotateCcw className="w-5 h-5 text-emerald-400" />}
           value={Math.floor(nextBreakIn / 60)}
-          label="Daqiqa qoldi"
+          label={t('dashboard.minutesLeft')}
           color="emerald"
         />
       </div>
@@ -217,11 +221,8 @@ export default function Dashboard() {
             <Sparkles className="w-4 h-4 text-indigo-400" />
           </div>
           <div>
-            <h4 className="font-semibold text-indigo-300 mb-1">Maslahat</h4>
-            <p className="text-sm text-slate-400">
-              Har 20 daqiqada 20 fut (6 metr) uzoqlikka 20 soniya qarang. Bu 20-20-20 qoidasi 
-              ko’z mushaklaringizni charchashdan saqlaydi.
-            </p>
+            <h4 className="font-semibold text-indigo-300 mb-1">{t('dashboard.tipTitle')}</h4>
+            <p className="text-sm text-slate-400">{t('dashboard.tipBody')}</p>
           </div>
         </div>
       </motion.div>

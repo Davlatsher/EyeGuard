@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wind, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/useStore';
 
 type Phase = 'idle' | 'inhale' | 'hold' | 'exhale' | 'complete';
@@ -11,17 +12,15 @@ const DURATIONS: Record<'inhale' | 'hold' | 'exhale', number> = {
   hold: 4,
   exhale: 6,
 };
-const LABELS: Record<'inhale' | 'hold' | 'exhale', string> = {
-  inhale: 'Nafas oling',
-  hold: 'Ushlab turing',
-  exhale: 'Chiqaring',
-};
 
 export default function Breathing() {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<Phase>('idle');
   const [cycle, setCycle] = useState(0);
   const [timer, setTimer] = useState(0);
   const { incrementBreaks, addBreakRecord } = useStore();
+
+  const labelFor = (p: 'inhale' | 'hold' | 'exhale') => t(`games.breathing.${p}`);
 
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const stepRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -103,8 +102,8 @@ export default function Breathing() {
             <Wind className="w-5 h-5 text-indigo-400" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Nafas Olish</h3>
-            <p className="text-sm text-slate-400">Nafas bilan birga ko’zlaringizni bo’shashtiring</p>
+            <h3 className="font-bold text-white">{t('games.breathing.title')}</h3>
+            <p className="text-sm text-slate-400">{t('games.breathing.desc')}</p>
           </div>
         </div>
       </div>
@@ -128,13 +127,13 @@ export default function Breathing() {
                 🌬️
               </motion.div>
               <p className="text-slate-400 mb-6 max-w-xs mx-auto">
-                4-4-6 nafas ritmi asab tizimini tinchlantiradi va ko’z zo’riqishini kamaytiradi
+                {t('games.breathing.intro')}
               </p>
               <button
                 onClick={start}
                 className="bg-indigo-500 hover:bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
               >
-                Boshlash
+                {t('common.start')}
               </button>
             </motion.div>
           )}
@@ -156,7 +155,7 @@ export default function Breathing() {
                   <span className="text-3xl font-mono font-bold text-white">{timer}</span>
                 </motion.div>
               </div>
-              <p className="text-2xl font-bold text-white mb-2">{LABELS[phase]}</p>
+              <p className="text-2xl font-bold text-white mb-2">{labelFor(phase)}</p>
               <div className="mt-4 flex items-center justify-center gap-1.5">
                 {Array.from({ length: TOTAL_CYCLES }).map((_, i) => (
                   <div
@@ -166,7 +165,7 @@ export default function Breathing() {
                 ))}
               </div>
               <p className="text-xs text-slate-500 mt-3">
-                {cycle + 1} / {TOTAL_CYCLES} tsikl
+                {t('games.breathing.cycleLabel', { current: cycle + 1, total: TOTAL_CYCLES })}
               </p>
             </motion.div>
           )}
@@ -185,14 +184,14 @@ export default function Breathing() {
               >
                 🧘
               </motion.div>
-              <p className="text-2xl font-bold text-indigo-400 mb-2">Ajoyib!</p>
-              <p className="text-slate-400 mb-6">{TOTAL_CYCLES} tsikl nafas mashqini tugatdingiz</p>
+              <p className="text-2xl font-bold text-indigo-400 mb-2">{t('games.great')}</p>
+              <p className="text-slate-400 mb-6">{t('games.breathing.result', { total: TOTAL_CYCLES })}</p>
               <button
                 onClick={() => setPhase('idle')}
                 className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
               >
                 <RotateCcw size={16} />
-                Qayta boshlash
+                {t('common.restart')}
               </button>
             </motion.div>
           )}

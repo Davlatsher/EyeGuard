@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../../store/useStore';
 
 const TOTAL_ROUNDS = 6;
@@ -30,6 +31,7 @@ export default function ColorMatch() {
   const [seed, setSeed] = useState(1);
   const [score, setScore] = useState(0);
   const [wrongTile, setWrongTile] = useState<number | null>(null);
+  const { t } = useTranslation();
   const { incrementBreaks, addBreakRecord } = useStore();
 
   const current = makeRound(round, seed);
@@ -85,8 +87,8 @@ export default function ColorMatch() {
             <Palette className="w-5 h-5 text-purple-400" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Rang Tanish</h3>
-            <p className="text-sm text-slate-400">Boshqacha rangdagi katakni toping</p>
+            <h3 className="font-bold text-white">{t('games.color.title')}</h3>
+            <p className="text-sm text-slate-400">{t('games.color.desc')}</p>
           </div>
         </div>
       </div>
@@ -110,13 +112,13 @@ export default function ColorMatch() {
                 🎨
               </motion.div>
               <p className="text-slate-400 mb-6 max-w-xs mx-auto">
-                Rang farqlarini ajratish ko’z retinasini mashq qiladi. Har raundda farq kichrayadi.
+                {t('games.color.intro')}
               </p>
               <button
                 onClick={start}
                 className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
               >
-                Boshlash
+                {t('common.start')}
               </button>
             </motion.div>
           )}
@@ -158,7 +160,7 @@ export default function ColorMatch() {
                 ))}
               </div>
               <p className="text-center text-xs text-slate-500 mt-3">
-                {round + 1} / {TOTAL_ROUNDS} raund
+                {t('games.color.roundLabel', { current: round + 1, total: TOTAL_ROUNDS })}
               </p>
             </motion.div>
           )}
@@ -177,17 +179,17 @@ export default function ColorMatch() {
               >
                 🎉
               </motion.div>
-              <p className="text-2xl font-bold text-purple-400 mb-2">Ajoyib!</p>
+              <p className="text-2xl font-bold text-purple-400 mb-2">{t('games.great')}</p>
               <p className="text-slate-400 mb-1">
-                {score} / {TOTAL_ROUNDS} raundni birinchi urinishda topdingiz
+                {t('games.color.resultFirst', { score, total: TOTAL_ROUNDS })}
               </p>
-              <p className="text-slate-500 text-sm mb-6">Ko’zlaringiz dam oldi</p>
+              <p className="text-slate-500 text-sm mb-6">{t('games.color.resultRest')}</p>
               <button
                 onClick={() => setPhase('idle')}
                 className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
               >
                 <RotateCcw size={16} />
-                Qayta boshlash
+                {t('common.restart')}
               </button>
             </motion.div>
           )}
