@@ -1,4 +1,4 @@
-use chrono::{Datelike, Local, NaiveDate};
+use chrono::{Local, NaiveDate};
 use rusqlite::{Connection, Result};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
@@ -82,11 +82,9 @@ fn seed_default_settings(conn: &Connection) -> Result<()> {
 }
 
 fn get_setting(conn: &Connection, key: &str) -> Option<String> {
-    conn.query_row(
-        "SELECT value FROM settings WHERE key = ?1",
-        [key],
-        |r| r.get::<_, String>(0),
-    )
+    conn.query_row("SELECT value FROM settings WHERE key = ?1", [key], |r| {
+        r.get::<_, String>(0)
+    })
     .ok()
 }
 
@@ -312,16 +310,6 @@ fn eye_health_from(total: u32, completed: u32) -> u32 {
     let skipped = total.saturating_sub(completed);
     let raw = 50i32 + (completed as i32) * 10 - (skipped as i32) * 5;
     raw.clamp(0, 100) as u32
-}
-
-/// Convenience for the current calendar day used by the timer loop.
-pub fn today_key() -> String {
-    Local::now().date_naive().format("%Y-%m-%d").to_string()
-}
-
-/// Expose current month for potential monthly rollups (kept for future use).
-pub fn current_month() -> u32 {
-    Local::now().month()
 }
 
 #[cfg(test)]

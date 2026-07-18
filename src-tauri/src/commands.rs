@@ -14,16 +14,15 @@ pub fn create_overlay_window(app: AppHandle) -> Result<String, String> {
     if app.get_webview_window("overlay").is_some() {
         return Ok("Overlay already open".into());
     }
-    let overlay =
-        WebviewWindowBuilder::new(&app, "overlay", WebviewUrl::App("index.html".into()))
-            .title("EyeGuard — Break")
-            .fullscreen(true)
-            .always_on_top(true)
-            .transparent(true)
-            .decorations(false)
-            .skip_taskbar(true)
-            .build()
-            .map_err(|e| e.to_string())?;
+    let overlay = WebviewWindowBuilder::new(&app, "overlay", WebviewUrl::App("index.html".into()))
+        .title("EyeGuard — Break")
+        .fullscreen(true)
+        .always_on_top(true)
+        .transparent(true)
+        .decorations(false)
+        .skip_taskbar(true)
+        .build()
+        .map_err(|e| e.to_string())?;
 
     overlay.show().map_err(|e| e.to_string())?;
     Ok("Overlay created".into())
