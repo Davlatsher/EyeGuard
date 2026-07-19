@@ -67,7 +67,8 @@
     "modeCustomDesc": "Настройте сами",
     "gentleDesc": "Оповещение + затемнение экрана",
     "strictDesc": "Экран полностью блокируется",
-    "camouflageDesc": "Прозрачный оверлей"
+    "camouflageDesc": "Прозрачный оверлей",
+    "customInterval": "Интервал"
   },
   "analytics": {
     "title": "Статистика",

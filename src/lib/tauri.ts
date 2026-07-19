@@ -27,6 +27,7 @@ export interface BackendSettings {
   auto_start: boolean;
   do_not_disturb: boolean;
   max_snooze: number;
+  custom_interval: number;
 }
 
 export interface BackendBreakRecord {
@@ -76,6 +77,7 @@ export const startTimer = (mode?: string) =>
   call<TimerStatus>('start_timer', { mode: mode ?? null });
 export const stopTimer = () => call<TimerStatus>('stop_timer');
 export const setTimerMode = (mode: string) => call<TimerStatus>('set_timer_mode', { mode });
+export const setInterval = (seconds: number) => call<TimerStatus>('set_interval', { seconds });
 export const resetTimer = () => call<TimerStatus>('reset_timer');
 export const snoozeTimer = (seconds?: number) =>
   call<TimerStatus>('snooze_timer', { seconds: seconds ?? null });

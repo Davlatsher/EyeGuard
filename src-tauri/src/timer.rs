@@ -135,6 +135,15 @@ pub fn set_timer_mode(state: State<'_, Arc<TimerState>>, mode: String) -> TimerS
     status(&state)
 }
 
+/// Set an explicit interval in seconds (used by the custom timer mode).
+#[tauri::command]
+pub fn set_interval(state: State<'_, Arc<TimerState>>, seconds: u64) -> TimerStatus {
+    let secs = seconds.clamp(60, 120 * 60);
+    state.interval.store(secs, Ordering::Relaxed);
+    state.remaining.store(secs, Ordering::Relaxed);
+    status(&state)
+}
+
 /// Reset the countdown to a full interval (e.g. after a completed break).
 #[tauri::command]
 pub fn reset_timer(state: State<'_, Arc<TimerState>>) -> TimerStatus {

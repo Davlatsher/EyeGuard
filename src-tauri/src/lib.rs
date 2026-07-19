@@ -14,15 +14,21 @@ use tauri::{
 use commands::*;
 use database::{init_db, load_settings, Db};
 use timer::{
-    get_timer_status, reset_timer, run_timer_loop, set_timer_mode, snooze_timer, start_timer,
-    stop_timer, TimerState,
+    get_timer_status, reset_timer, run_timer_loop, set_interval, set_timer_mode, snooze_timer,
+    start_timer, stop_timer, TimerState,
 };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     // Initialize database (schema + defaults) before anything else.
     let conn = init_db().expect("Failed to initialize database");
-    let interval = timer::interval_for_mode(&load_settings(&conn).timer_mode);
+    let settings = load_settings(&conn);
+    // Custom mode uses the saved interval; presets use their fixed interval.
+    let interval = if settings.timer_mode == "custom" {
+        (settings.custom_interval as u64) * 60
+    } else {
+        timer::interval_for_mode(&settings.timer_mode)
+    };
 
     tauri::Builder::default()
         .plugin(tauri_plugin_notification::init())
@@ -43,6 +49,7 @@ pub fn run() {
             start_timer,
             stop_timer,
             set_timer_mode,
+            set_interval,
             reset_timer,
             snooze_timer,
             get_timer_status,

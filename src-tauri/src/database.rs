@@ -56,6 +56,8 @@ pub struct Settings {
     pub auto_start: bool,
     pub do_not_disturb: bool,
     pub max_snooze: u32,
+    /// Interval in minutes used by the "custom" timer mode.
+    pub custom_interval: u32,
 }
 
 impl Default for Settings {
@@ -69,6 +71,7 @@ impl Default for Settings {
             auto_start: true,
             do_not_disturb: false,
             max_snooze: 3,
+            custom_interval: 30,
         }
     }
 }
@@ -120,6 +123,9 @@ pub fn load_settings(conn: &Connection) -> Settings {
         max_snooze: get_setting(conn, "max_snooze")
             .and_then(|v| v.parse().ok())
             .unwrap_or(d.max_snooze),
+        custom_interval: get_setting(conn, "custom_interval")
+            .and_then(|v| v.parse().ok())
+            .unwrap_or(d.custom_interval),
     }
 }
 
@@ -136,6 +142,7 @@ pub fn save_settings(conn: &Connection, s: &Settings) -> Result<()> {
     set_setting(conn, "auto_start", &s.auto_start.to_string())?;
     set_setting(conn, "do_not_disturb", &s.do_not_disturb.to_string())?;
     set_setting(conn, "max_snooze", &s.max_snooze.to_string())?;
+    set_setting(conn, "custom_interval", &s.custom_interval.to_string())?;
     Ok(())
 }
 

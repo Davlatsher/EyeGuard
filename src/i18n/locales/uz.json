@@ -67,7 +67,8 @@
     "modeCustomDesc": "O’zingiz sozlang",
     "gentleDesc": "Ogohlantirish + xira ekran",
     "strictDesc": "Ekran to’liq bloklanadi",
-    "camouflageDesc": "Shaffof overlay"
+    "camouflageDesc": "Shaffof overlay",
+    "customInterval": "Interval"
   },
   "analytics": {
     "title": "Statistika",

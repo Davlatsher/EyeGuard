@@ -15,16 +15,18 @@ export default function TimerSettings() {
     notificationsEnabled,
     autoStart,
     doNotDisturb,
+    customMinutes,
     setTimerMode,
     setBreakMode,
     setBreakDuration,
+    setCustomMinutes,
     toggleSetting,
   } = useStore();
 
   const modes: { id: TimerMode; label: string; desc: string; time: string }[] = [
     { id: '20-20-20', label: '20-20-20', desc: t('settings.mode2020Desc'), time: '20 min' },
     { id: 'pomodoro', label: t('timerModes.pomodoro'), desc: t('settings.modePomodoroDesc'), time: '25 min' },
-    { id: 'custom', label: t('timerModes.custom'), desc: t('settings.modeCustomDesc'), time: '30 min' },
+    { id: 'custom', label: t('timerModes.custom'), desc: t('settings.modeCustomDesc'), time: `${customMinutes} min` },
   ];
 
   const breakModes: { id: BreakMode; label: string; desc: string; color: string }[] = [
@@ -96,6 +98,35 @@ export default function TimerSettings() {
             </motion.button>
           ))}
         </div>
+
+        {/* Custom interval slider (only for the custom mode) */}
+        {timerMode === 'custom' && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="bg-slate-800 rounded-2xl p-4 border border-slate-700 mt-3"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-slate-300">{t('settings.customInterval')}</span>
+              <span className="text-sky-400 font-mono font-bold">
+                {customMinutes} {t('common.minute')}
+              </span>
+            </div>
+            <input
+              type="range"
+              min="5"
+              max="60"
+              step="5"
+              value={customMinutes}
+              onChange={(e) => setCustomMinutes(Number(e.target.value))}
+              className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-sky-500"
+            />
+            <div className="flex justify-between text-xs text-slate-500 mt-2">
+              <span>5 min</span>
+              <span>60 min</span>
+            </div>
+          </motion.div>
+        )}
       </Section>
 
       {/* Break Mode */}

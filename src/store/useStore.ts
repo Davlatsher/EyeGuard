@@ -30,6 +30,7 @@ interface EyeGuardState {
   breakDuration: number;
   snoozeCount: number;
   maxSnooze: number;
+  customMinutes: number;
 
   // Settings
   soundEnabled: boolean;
@@ -58,6 +59,7 @@ interface EyeGuardState {
   setTimerMode: (mode: TimerMode) => void;
   setBreakMode: (mode: BreakMode) => void;
   setBreakDuration: (seconds: number) => void;
+  setCustomMinutes: (minutes: number) => void;
   toggleTimer: () => void;
   setNextBreakIn: (seconds: number) => void;
   decrementNextBreak: () => void;
@@ -82,6 +84,7 @@ function toBackendSettings(s: EyeGuardState): backend.BackendSettings {
     auto_start: s.autoStart,
     do_not_disturb: s.doNotDisturb,
     max_snooze: s.maxSnooze,
+    custom_interval: s.customMinutes,
   };
 }
 
@@ -103,6 +106,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
     breakDuration: 20,
     snoozeCount: 0,
     maxSnooze: 3,
+    customMinutes: 30,
 
     // Settings defaults
     soundEnabled: true,
@@ -144,6 +148,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
         patch.autoStart = settings.auto_start;
         patch.doNotDisturb = settings.do_not_disturb;
         patch.maxSnooze = settings.max_snooze;
+        patch.customMinutes = settings.custom_interval;
       }
       if (summary) {
         patch.eyeHealthScore = summary.eye_health_score;
@@ -202,8 +207,20 @@ export const useStore = create<EyeGuardState>((set, get) => {
     },
 
     setTimerMode: (mode) => {
-      set({ timerMode: mode, nextBreakIn: MODE_DURATIONS[mode] });
+      const seconds = mode === 'custom' ? get().customMinutes * 60 : MODE_DURATIONS[mode];
+      set({ timerMode: mode, nextBreakIn: seconds });
       void backend.setTimerMode(mode);
+      if (mode === 'custom') void backend.setInterval(seconds);
+      persistSettings();
+    },
+
+    setCustomMinutes: (minutes) => {
+      set({ customMinutes: minutes });
+      if (get().timerMode === 'custom') {
+        const seconds = minutes * 60;
+        set({ nextBreakIn: seconds });
+        void backend.setInterval(seconds);
+      }
       persistSettings();
     },
 

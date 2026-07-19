@@ -67,7 +67,8 @@
     "modeCustomDesc": "Set it yourself",
     "gentleDesc": "Alert + dimmed screen",
     "strictDesc": "Screen is fully blocked",
-    "camouflageDesc": "Transparent overlay"
+    "camouflageDesc": "Transparent overlay",
+    "customInterval": "Interval"
   },
   "analytics": {
     "title": "Statistics",
