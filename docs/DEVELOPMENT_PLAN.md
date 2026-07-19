@@ -72,10 +72,10 @@
 
 ## 4. Faza 2 — Monetizatsiya va O'sish (6–8 hafta) → v1.5 "Pro"
 
-- [ ] **Freemium bo'linishi**:
-  - Free: 20-20-20 timer, gentle rejim, 2 o'yin, 7 kunlik statistika
-  - Pro: barcha rejimlar, 5+ o'yin, cheksiz statistika, custom timer, multi-monitor, temalar
-- [ ] **Litsenziya tizimi**: offline litsenziya kaliti (ed25519 imzo) + Paddle/LemonSqueezy webhook
+- [x] **Freemium bo'linishi** ✅ (commit `ee17deb`, `lib/pro.ts`):
+  - Free: 20-20-20 timer, gentle rejim, 2 o'yin (followdot/blink), 7 kunlik statistika
+  - Pro: barcha rejimlar, 5 o'yin, 30-kun statistika, custom timer — gating + upgrade modal bilan
+- [x] **Litsenziya tizimi** (asosiy) ✅: offline ed25519 litsenziya kaliti (`lib/license.ts`, `@noble/ed25519`), aktivatsiya UI, developer tools (`scripts/`). _Qoldi:_ Paddle/LemonSqueezy to'lov integratsiyasi (webhook + haqiqiy sotib olish)
 - [ ] **Gamifikatsiya chuqurligi**: yutuqlar (achievements), darajalar, haftalik challenge'lar
 - [ ] **Light theme** + 2–3 rang temalar (Pro)
 - [ ] **Ixtiyoriy telemetriya** (opt-in, faqat anonim events) — mahsulot qarorlari uchun
