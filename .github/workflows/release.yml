@@ -1,0 +1,50 @@
+name: Release
+
+# Push a version tag (e.g. v1.0.0) to build the Windows installer and publish
+# it as a GitHub Release with a permanent download link:
+#   git tag v1.0.0 && git push origin v1.0.0
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & publish Windows installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build app and publish release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: 'EyeGuard ${{ github.ref_name }}'
+          releaseBody: |
+            Windows uchun EyeGuard — ko'z himoyasi ilovasi.
+
+            **O'rnatish:** quyidagi Assets bo'limidan `.msi` (yoki `.exe`) ni yuklab oling va ishga tushiring.
+
+            > Ilova hozircha imzolanmagan, shuning uchun Windows SmartScreen ogohlantirishi chiqishi mumkin:
+            > "More info" → "Run anyway" ni bosing.
+          releaseDraft: false
+          prerelease: false
