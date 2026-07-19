@@ -159,5 +159,23 @@
     "strictBody": "Ekran to’liq bloklangan. Ko’zlaringizni dam oldiring.",
     "camouflageTitle": "Ko’zni dam oldiring",
     "camouflageLeft": "{{time}} qoldi"
+  },
+  "onboarding": {
+    "skip": "O’tkazib yuborish",
+    "next": "Keyingisi",
+    "back": "Orqaga",
+    "start": "Boshlaymiz",
+    "step1": {
+      "title": "EyeGuard’ga xush kelibsiz",
+      "body": "Kun bo’yi ekranga qarash ko’zlaringizni charchatadi. EyeGuard 20-20-20 qoidasi bilan muntazam tanaffuslarni eslatib, ko’zlaringizni sog’lom saqlaydi."
+    },
+    "step2": {
+      "title": "Tanaffus rejimlari va mashqlar",
+      "body": "Yumshoq, qat’iy yoki kamuflyaj rejimini tanlang. Tanaffus paytida ko’z mushaklarini mashq qiluvchi 5 ta mini-o’yin sizni kutadi."
+    },
+    "step3": {
+      "title": "Rivojingizni kuzating",
+      "body": "Har bir tanaffus salomatlik ballingizni oshiradi. Statistika, kunlik streak va haftalik grafiklar bilan odatingizni mustahkamlang."
+    }
   }
 }

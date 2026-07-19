@@ -159,5 +159,23 @@
     "strictBody": "The screen is fully blocked. Rest your eyes.",
     "camouflageTitle": "Rest your eyes",
     "camouflageLeft": "{{time}} left"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "next": "Next",
+    "back": "Back",
+    "start": "Get started",
+    "step1": {
+      "title": "Welcome to EyeGuard",
+      "body": "Staring at a screen all day tires your eyes. EyeGuard reminds you to take regular breaks with the 20-20-20 rule, keeping your eyes healthy."
+    },
+    "step2": {
+      "title": "Break modes & exercises",
+      "body": "Pick gentle, strict or camouflage mode. During breaks, 5 mini-games help you exercise your eye muscles."
+    },
+    "step3": {
+      "title": "Track your progress",
+      "body": "Every break raises your health score. Reinforce the habit with stats, daily streaks and weekly charts."
+    }
   }
 }

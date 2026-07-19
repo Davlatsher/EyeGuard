@@ -67,7 +67,7 @@
 - [x] **Tovushlar** ✅: Web Audio API bilan yumshoq ikki-notali chime (`lib/sound.ts`), break-due'da `sound_enabled` bo'lsa chalinadi — asset kerak emas, CSP-safe
 - [x] **Custom rejim UI** (qisman): ✅ break duration slider endi ishlaydi (`setBreakDuration`); custom interval slider hali qoldi
 - [x] **i18n**: ✅ uz / ru / en (react-i18next) — commit `eddc3e1`, til tanlagich + 3 tilda tekshirilgan
-- [ ] **Onboarding**: birinchi ochilishda 3-qadam tanishtiruv
+- [x] **Onboarding** ✅: birinchi ochilishda 3-qadam tanishtiruv (`Onboarding.tsx`), `localStorage` flag bilan bir marta ko'rsatiladi; skip/back/next + progress nuqtalari, uz/ru/en tarjimalar — brauzerda tekshirilgan
 - [ ] **Code signing** + MSI/NSIS installer, auto-updater endpoint sozlash
 
 ## 4. Faza 2 — Monetizatsiya va O'sish (6–8 hafta) → v1.5 "Pro"

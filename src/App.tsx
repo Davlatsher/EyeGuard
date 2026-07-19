@@ -10,12 +10,14 @@ import TimerSettings from './components/TimerSettings';
 import MiniGames from './components/MiniGames/MiniGames';
 import Analytics from './components/Analytics';
 import BreakOverlay from './components/BreakOverlay';
+import Onboarding, { isOnboarded } from './components/Onboarding';
 
 type Tab = 'dashboard' | 'settings' | 'games' | 'analytics';
 
 function App() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+  const [showOnboarding, setShowOnboarding] = useState(() => !isOnboarded());
   const { isTimerRunning, timerMode, nextBreakIn, isOverlayVisible, decrementNextBreak } = useStore();
 
   // On mount: hydrate from backend and subscribe to backend-driven events.
@@ -73,6 +75,11 @@ function App() {
       {/* Break Overlay */}
       <AnimatePresence>
         {isOverlayVisible && <BreakOverlay />}
+      </AnimatePresence>
+
+      {/* First-launch onboarding */}
+      <AnimatePresence>
+        {showOnboarding && <Onboarding onDone={() => setShowOnboarding(false)} />}
       </AnimatePresence>
 
       {/* Header */}
