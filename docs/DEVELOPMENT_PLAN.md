@@ -76,7 +76,7 @@
   - Free: 20-20-20 timer, gentle rejim, 2 o'yin (followdot/blink), 7 kunlik statistika
   - Pro: barcha rejimlar, 5 o'yin, 30-kun statistika, custom timer — gating + upgrade modal bilan
 - [x] **Litsenziya tizimi** (asosiy) ✅: offline ed25519 litsenziya kaliti (`lib/license.ts`, `@noble/ed25519`), aktivatsiya UI, developer tools (`scripts/`). _Qoldi:_ Paddle/LemonSqueezy to'lov integratsiyasi (webhook + haqiqiy sotib olish)
-- [ ] **Gamifikatsiya chuqurligi**: yutuqlar (achievements), darajalar, haftalik challenge'lar
+- [x] **Gamifikatsiya chuqurligi** ✅ (commit `8ac120d`): 10 ta yutuq (achievements), daraja/XP tizimi (LevelCard + AchievementsGrid + unlock toast). _Qoldi:_ haftalik challenge'lar
 - [ ] **Light theme** + 2–3 rang temalar (Pro)
 - [ ] **Ixtiyoriy telemetriya** (opt-in, faqat anonim events) — mahsulot qarorlari uchun
 - [ ] **Veb-sayt**: landing + to'lov + yuklab olish + changelog
