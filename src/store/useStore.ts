@@ -2,6 +2,27 @@ import { create } from 'zustand';
 import * as backend from '../lib/tauri';
 import { verifyLicenseKey, loadStoredLicense, storeLicense, clearLicense } from '../lib/license';
 import { FREE_STATS_DAYS, PRO_STATS_DAYS } from '../lib/pro';
+import { evaluateUnlocked } from '../lib/achievements';
+
+const LS_ACH = 'eyeguard-achievements';
+const LS_GAMES = 'eyeguard-games';
+
+function loadJsonArray(key: string): string[] {
+  try {
+    const v = localStorage.getItem(key);
+    const arr = v ? JSON.parse(v) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+function saveJsonArray(key: string, arr: string[]): void {
+  try {
+    localStorage.setItem(key, JSON.stringify(arr));
+  } catch {
+    /* ignore */
+  }
+}
 
 export type TimerMode = '20-20-20' | 'pomodoro' | 'custom';
 export type BreakMode = 'gentle' | 'strict' | 'camouflage';
@@ -60,6 +81,13 @@ interface EyeGuardState {
   deactivateLicense: () => void;
   openUpgrade: () => void;
   closeUpgrade: () => void;
+
+  // Gamification
+  unlockedAchievements: string[];
+  playedGames: string[];
+  achievementToast: string | null;
+  checkAchievements: () => void;
+  clearAchievementToast: () => void;
 
   // Lifecycle
   hydrated: boolean;
@@ -161,6 +189,29 @@ export const useStore = create<EyeGuardState>((set, get) => {
     openUpgrade: () => set({ upgradeOpen: true }),
     closeUpgrade: () => set({ upgradeOpen: false }),
 
+    // Gamification (restored from localStorage)
+    unlockedAchievements: loadJsonArray(LS_ACH),
+    playedGames: loadJsonArray(LS_GAMES),
+    achievementToast: null,
+
+    checkAchievements: () => {
+      const st = get();
+      const nowUnlocked = evaluateUnlocked({
+        totalBreaks: st.totalBreaks,
+        streak: st.streak,
+        todayBreaks: st.todayBreaks,
+        health: st.eyeHealthScore,
+        gamesPlayed: st.playedGames.length,
+      });
+      const fresh = nowUnlocked.filter((id) => !st.unlockedAchievements.includes(id));
+      if (fresh.length === 0) return;
+      const merged = [...st.unlockedAchievements, ...fresh];
+      saveJsonArray(LS_ACH, merged);
+      set({ unlockedAchievements: merged, achievementToast: fresh[0] });
+    },
+
+    clearAchievementToast: () => set({ achievementToast: null }),
+
     hydrated: false,
 
     hydrate: async () => {
@@ -210,6 +261,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
       if (daily) patch.dailyStats = daily;
 
       set(patch as EyeGuardState);
+      get().checkAchievements();
     },
 
     refreshStats: async () => {
@@ -239,6 +291,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
         }));
       }
       set(patch as EyeGuardState);
+      get().checkAchievements();
     },
 
     setTimerMode: (mode) => {
@@ -294,11 +347,20 @@ export const useStore = create<EyeGuardState>((set, get) => {
       set({ eyeHealthScore: Math.min(100, Math.max(0, score)) }),
 
     addBreakRecord: (record) => {
-      set((state) => ({ breakHistory: [record, ...state.breakHistory].slice(0, 50) }));
+      set((state) => {
+        const playedGames =
+          record.gamePlayed && !state.playedGames.includes(record.gamePlayed)
+            ? [...state.playedGames, record.gamePlayed]
+            : state.playedGames;
+        return { breakHistory: [record, ...state.breakHistory].slice(0, 50), playedGames };
+      });
+      if (record.gamePlayed) saveJsonArray(LS_GAMES, get().playedGames);
       // Persist to backend; refresh derived stats afterwards.
       void backend
         .saveBreakRecord(record.duration, record.completed, record.gamePlayed ?? null)
         .then(() => get().refreshStats());
+      // Evaluate immediately for the browser/optimistic path.
+      get().checkAchievements();
     },
 
     showOverlay: (content) => set({ isOverlayVisible: true, overlayContent: content }),

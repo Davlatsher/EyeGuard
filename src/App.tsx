@@ -11,6 +11,7 @@ import MiniGames from './components/MiniGames/MiniGames';
 import Analytics from './components/Analytics';
 import BreakOverlay from './components/BreakOverlay';
 import UpgradeModal from './components/UpgradeModal';
+import AchievementToast from './components/AchievementToast';
 import Onboarding, { isOnboarded } from './components/Onboarding';
 
 type Tab = 'dashboard' | 'settings' | 'games' | 'analytics';
@@ -86,6 +87,11 @@ function App() {
 
       {/* Pro upgrade / license modal */}
       <AnimatePresence>{upgradeOpen && <UpgradeModal />}</AnimatePresence>
+
+      {/* Achievement unlock toast */}
+      <AnimatePresence>
+        <AchievementToast />
+      </AnimatePresence>
 
       {/* Header */}
       <header className="relative z-10 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 px-6 py-4">

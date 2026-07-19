@@ -202,5 +202,53 @@
     "feat3": "Pomodoro and custom timer",
     "feat4": "Unlimited stats history",
     "feat5": "Future updates"
+  },
+  "gami": {
+    "achievements": "Achievements",
+    "level": "Level",
+    "xp": "XP",
+    "unlocked": "Achievement unlocked!",
+    "ach": {
+      "first_break": {
+        "title": "First step",
+        "desc": "You took your first break"
+      },
+      "breaks_10": {
+        "title": "Ten up",
+        "desc": "10 breaks"
+      },
+      "breaks_50": {
+        "title": "Half a hundred",
+        "desc": "50 breaks"
+      },
+      "breaks_100": {
+        "title": "Century",
+        "desc": "100 breaks"
+      },
+      "daily_5": {
+        "title": "Active day",
+        "desc": "5 breaks in a day"
+      },
+      "streak_3": {
+        "title": "On fire",
+        "desc": "3-day streak"
+      },
+      "streak_7": {
+        "title": "Weekly",
+        "desc": "7-day streak"
+      },
+      "streak_30": {
+        "title": "Champion",
+        "desc": "30-day streak"
+      },
+      "all_games": {
+        "title": "All games",
+        "desc": "You played all 5 games"
+      },
+      "health_90": {
+        "title": "Healthy eyes",
+        "desc": "Health score 90+"
+      }
+    }
   }
 }

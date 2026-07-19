@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { useStore } from '../store/useStore';
 import { isTauri, type DailyStat } from '../lib/tauri';
+import { AchievementsGrid } from './Achievements';
 
 /** Map internal game ids (stored in the DB) to translation keys. */
 const GAME_TITLE_KEY: Record<string, string> = {
@@ -179,6 +180,9 @@ export default function Analytics() {
 
         {usingDemo && <p className="text-xs text-slate-500 mt-3 text-center">{t('analytics.demoNote')}</p>}
       </motion.div>
+
+      {/* Achievements */}
+      <AchievementsGrid />
 
       {/* Recent Breaks */}
       <motion.div

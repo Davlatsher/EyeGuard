@@ -202,5 +202,53 @@
     "feat3": "Pomodoro va Custom timer",
     "feat4": "Cheksiz statistika tarixi",
     "feat5": "Kelajakdagi yangiliklar"
+  },
+  "gami": {
+    "achievements": "Yutuqlar",
+    "level": "Daraja",
+    "xp": "XP",
+    "unlocked": "Yutuq ochildi!",
+    "ach": {
+      "first_break": {
+        "title": "Birinchi qadam",
+        "desc": "Birinchi tanaffusni bajardingiz"
+      },
+      "breaks_10": {
+        "title": "O’nlik",
+        "desc": "10 ta tanaffus"
+      },
+      "breaks_50": {
+        "title": "Yarim yuz",
+        "desc": "50 ta tanaffus"
+      },
+      "breaks_100": {
+        "title": "Yuzlik",
+        "desc": "100 ta tanaffus"
+      },
+      "daily_5": {
+        "title": "Faol kun",
+        "desc": "Bir kunda 5 ta tanaffus"
+      },
+      "streak_3": {
+        "title": "Olov",
+        "desc": "3 kunlik streak"
+      },
+      "streak_7": {
+        "title": "Haftalik",
+        "desc": "7 kunlik streak"
+      },
+      "streak_30": {
+        "title": "Chempion",
+        "desc": "30 kunlik streak"
+      },
+      "all_games": {
+        "title": "Barcha o’yinlar",
+        "desc": "5 o’yinning barchasini o’ynadingiz"
+      },
+      "health_90": {
+        "title": "Sog’lom ko’z",
+        "desc": "Salomatlik balli 90+"
+      }
+    }
   }
 }

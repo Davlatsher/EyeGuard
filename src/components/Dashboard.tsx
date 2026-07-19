@@ -3,6 +3,7 @@ import { Eye, Clock, Zap, Trophy, Play, Pause, RotateCcw, Sparkles } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/useStore';
 import { useEffect, useState } from 'react';
+import { LevelCard } from './Achievements';
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -99,8 +100,11 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
+      {/* Level / XP */}
+      <LevelCard />
+
       {/* Timer Card */}
-      <motion.div 
+      <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
