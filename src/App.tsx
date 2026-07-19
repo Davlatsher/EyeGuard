@@ -10,6 +10,7 @@ import TimerSettings from './components/TimerSettings';
 import MiniGames from './components/MiniGames/MiniGames';
 import Analytics from './components/Analytics';
 import BreakOverlay from './components/BreakOverlay';
+import UpgradeModal from './components/UpgradeModal';
 import Onboarding, { isOnboarded } from './components/Onboarding';
 
 type Tab = 'dashboard' | 'settings' | 'games' | 'analytics';
@@ -18,7 +19,8 @@ function App() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showOnboarding, setShowOnboarding] = useState(() => !isOnboarded());
-  const { isTimerRunning, timerMode, nextBreakIn, isOverlayVisible, decrementNextBreak } = useStore();
+  const { isTimerRunning, timerMode, nextBreakIn, isOverlayVisible, decrementNextBreak, upgradeOpen } =
+    useStore();
 
   // On mount: hydrate from backend and subscribe to backend-driven events.
   useEffect(() => {
@@ -81,6 +83,9 @@ function App() {
       <AnimatePresence>
         {showOnboarding && <Onboarding onDone={() => setShowOnboarding(false)} />}
       </AnimatePresence>
+
+      {/* Pro upgrade / license modal */}
+      <AnimatePresence>{upgradeOpen && <UpgradeModal />}</AnimatePresence>
 
       {/* Header */}
       <header className="relative z-10 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 px-6 py-4">

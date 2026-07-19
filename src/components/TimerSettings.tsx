@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power, Globe } from 'lucide-react';
+import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power, Globe, Crown, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useStore, TimerMode, BreakMode } from '../store/useStore';
 import { setAutoStart } from '../lib/tauri';
 import { SUPPORTED_LANGUAGES, setLang, type LangCode } from '../i18n';
+import { isTimerModeFree, isBreakModeFree } from '../lib/pro';
 
 export default function TimerSettings() {
   const { t, i18n } = useTranslation();
@@ -21,7 +22,20 @@ export default function TimerSettings() {
     setBreakDuration,
     setCustomMinutes,
     toggleSetting,
+    isPro,
+    licenseEmail,
+    openUpgrade,
+    deactivateLicense,
   } = useStore();
+
+  const pickTimerMode = (mode: TimerMode) => {
+    if (isTimerModeFree(mode) || isPro) setTimerMode(mode);
+    else openUpgrade();
+  };
+  const pickBreakMode = (mode: BreakMode) => {
+    if (isBreakModeFree(mode) || isPro) setBreakMode(mode);
+    else openUpgrade();
+  };
 
   const modes: { id: TimerMode; label: string; desc: string; time: string }[] = [
     { id: '20-20-20', label: '20-20-20', desc: t('settings.mode2020Desc'), time: '20 min' },
@@ -41,6 +55,43 @@ export default function TimerSettings() {
         <h2 className="text-2xl font-bold text-white">{t('settings.title')}</h2>
         <p className="text-slate-400">{t('settings.subtitle')}</p>
       </div>
+
+      {/* Pro / License */}
+      {isPro ? (
+        <div className="flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-2xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+              <Crown className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <div className="font-semibold text-amber-300">{t('pro.proMember')}</div>
+              <div className="text-xs text-slate-400">{licenseEmail}</div>
+            </div>
+          </div>
+          <button
+            onClick={deactivateLicense}
+            className="text-xs text-slate-500 hover:text-red-400 transition-colors"
+          >
+            {t('pro.deactivate')}
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={openUpgrade}
+          className="w-full flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-2xl p-4 hover:from-amber-500/20 hover:to-orange-500/20 transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+              <Crown className="w-5 h-5 text-white" />
+            </div>
+            <div className="text-left">
+              <div className="font-semibold text-white">{t('pro.upgrade')}</div>
+              <div className="text-xs text-slate-400">{t('pro.subtitle')}</div>
+            </div>
+          </div>
+          <span className="text-amber-400 text-sm font-semibold">→</span>
+        </button>
+      )}
 
       {/* Language */}
       <Section icon={<Globe className="w-5 h-5" />} title={t('settings.language')}>
@@ -70,7 +121,7 @@ export default function TimerSettings() {
               key={mode.id}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              onClick={() => setTimerMode(mode.id)}
+              onClick={() => pickTimerMode(mode.id)}
               className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${
                 timerMode === mode.id
                   ? 'bg-sky-500/10 border-sky-500/50'
@@ -84,8 +135,9 @@ export default function TimerSettings() {
                   <Timer size={20} />
                 </div>
                 <div className="text-left">
-                  <div className={`font-semibold ${timerMode === mode.id ? 'text-sky-400' : 'text-white'}`}>
+                  <div className={`font-semibold flex items-center gap-2 ${timerMode === mode.id ? 'text-sky-400' : 'text-white'}`}>
                     {mode.label}
+                    {!isTimerModeFree(mode.id) && !isPro && <Lock size={12} className="text-amber-400" />}
                   </div>
                   <div className="text-sm text-slate-500">{mode.desc}</div>
                 </div>
@@ -137,7 +189,7 @@ export default function TimerSettings() {
               key={mode.id}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              onClick={() => setBreakMode(mode.id)}
+              onClick={() => pickBreakMode(mode.id)}
               className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${
                 breakMode === mode.id
                   ? `bg-${mode.color}-500/10 border-${mode.color}-500/50`
@@ -151,8 +203,9 @@ export default function TimerSettings() {
                   <Shield size={20} />
                 </div>
                 <div className="text-left">
-                  <div className={`font-semibold ${breakMode === mode.id ? `text-${mode.color}-400` : 'text-white'}`}>
+                  <div className={`font-semibold flex items-center gap-2 ${breakMode === mode.id ? `text-${mode.color}-400` : 'text-white'}`}>
                     {mode.label}
+                    {!isBreakModeFree(mode.id) && !isPro && <Lock size={12} className="text-amber-400" />}
                   </div>
                   <div className="text-sm text-slate-500">{mode.desc}</div>
                 </div>

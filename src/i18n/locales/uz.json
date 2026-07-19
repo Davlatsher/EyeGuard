@@ -68,7 +68,8 @@
     "gentleDesc": "Ogohlantirish + xira ekran",
     "strictDesc": "Ekran to’liq bloklanadi",
     "camouflageDesc": "Shaffof overlay",
-    "customInterval": "Interval"
+    "customInterval": "Interval",
+    "license": "Litsenziya"
   },
   "analytics": {
     "title": "Statistika",
@@ -178,5 +179,28 @@
       "title": "Rivojingizni kuzating",
       "body": "Har bir tanaffus salomatlik ballingizni oshiradi. Statistika, kunlik streak va haftalik grafiklar bilan odatingizni mustahkamlang."
     }
+  },
+  "pro": {
+    "badge": "Pro",
+    "free": "Bepul",
+    "upgrade": "Pro’ga o’tish",
+    "title": "EyeGuard Pro",
+    "subtitle": "Barcha imkoniyatlarni oching",
+    "lifetime": "Bir martalik to’lov — umrbod",
+    "buy": "Sotib olish",
+    "haveKey": "Litsenziya kalitim bor",
+    "enterKey": "Litsenziya kalitini kiriting",
+    "activate": "Faollashtirish",
+    "activated": "Pro faollashtirildi!",
+    "invalidKey": "Noto’g’ri litsenziya kaliti",
+    "proMember": "Pro foydalanuvchi",
+    "deactivate": "O’chirish",
+    "locked": "Bu Pro imkoniyat",
+    "comingSoon": "To’lov tez orada",
+    "feat1": "Barcha 5 ko’z-mashq o’yini",
+    "feat2": "Qat’iy va Kamuflyaj rejimlari",
+    "feat3": "Pomodoro va Custom timer",
+    "feat4": "Cheksiz statistika tarixi",
+    "feat5": "Kelajakdagi yangiliklar"
   }
 }

@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import * as backend from '../lib/tauri';
+import { verifyLicenseKey, loadStoredLicense, storeLicense, clearLicense } from '../lib/license';
+import { FREE_STATS_DAYS, PRO_STATS_DAYS } from '../lib/pro';
 
 export type TimerMode = '20-20-20' | 'pomodoro' | 'custom';
 export type BreakMode = 'gentle' | 'strict' | 'camouflage';
@@ -50,6 +52,15 @@ interface EyeGuardState {
   isOverlayVisible: boolean;
   overlayContent: 'break' | 'game' | null;
 
+  // Monetization
+  isPro: boolean;
+  licenseEmail: string | null;
+  upgradeOpen: boolean;
+  activateLicense: (key: string) => boolean;
+  deactivateLicense: () => void;
+  openUpgrade: () => void;
+  closeUpgrade: () => void;
+
   // Lifecycle
   hydrated: boolean;
   hydrate: () => Promise<void>;
@@ -89,6 +100,9 @@ function toBackendSettings(s: EyeGuardState): backend.BackendSettings {
 }
 
 export const useStore = create<EyeGuardState>((set, get) => {
+  // Restore a previously activated Pro license (verified) at startup.
+  const stored = loadStoredLicense();
+
   // Fire-and-forget persistence of the whole settings object.
   const persistSettings = () => {
     void backend.updateSettings(toBackendSettings(get()));
@@ -126,6 +140,27 @@ export const useStore = create<EyeGuardState>((set, get) => {
     isOverlayVisible: false,
     overlayContent: null,
 
+    // Monetization (restore any stored license synchronously)
+    isPro: stored !== null,
+    licenseEmail: stored?.payload.email ?? null,
+    upgradeOpen: false,
+
+    activateLicense: (key) => {
+      const payload = verifyLicenseKey(key);
+      if (!payload) return false;
+      storeLicense(key.trim());
+      set({ isPro: true, licenseEmail: payload.email, upgradeOpen: false });
+      return true;
+    },
+
+    deactivateLicense: () => {
+      clearLicense();
+      set({ isPro: false, licenseEmail: null });
+    },
+
+    openUpgrade: () => set({ upgradeOpen: true }),
+    closeUpgrade: () => set({ upgradeOpen: false }),
+
     hydrated: false,
 
     hydrate: async () => {
@@ -134,7 +169,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
         backend.getStatsSummary(),
         backend.getBreakHistory(50),
         backend.getTimerStatus(),
-        backend.getDailyStats(7),
+        backend.getDailyStats(get().isPro ? PRO_STATS_DAYS : FREE_STATS_DAYS),
       ]);
 
       const patch: Partial<EyeGuardState> = { hydrated: true };
@@ -181,7 +216,7 @@ export const useStore = create<EyeGuardState>((set, get) => {
       const [summary, history, daily] = await Promise.all([
         backend.getStatsSummary(),
         backend.getBreakHistory(50),
-        backend.getDailyStats(7),
+        backend.getDailyStats(get().isPro ? PRO_STATS_DAYS : FREE_STATS_DAYS),
       ]);
       const patch: Partial<EyeGuardState> = {};
       if (daily) patch.dailyStats = daily;

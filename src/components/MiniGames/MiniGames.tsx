@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, Target, Eye, Focus, Palette, Wind } from 'lucide-react';
+import { ChevronLeft, Target, Eye, Focus, Palette, Wind, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useStore } from '../../store/useStore';
+import { isGameFree } from '../../lib/pro';
 import FollowDot from './FollowDot';
 import BlinkTrainer from './BlinkTrainer';
 import FocusShift from './FocusShift';
@@ -28,7 +30,13 @@ const games: GameInfo[] = [
 
 export default function MiniGames() {
   const { t } = useTranslation();
+  const { isPro, openUpgrade } = useStore();
   const [activeGame, setActiveGame] = useState<GameType>('menu');
+
+  const openGame = (id: GameId) => {
+    if (isGameFree(id) || isPro) setActiveGame(id);
+    else openUpgrade();
+  };
 
   const durationText = (seconds: number) =>
     seconds >= 60
@@ -73,7 +81,7 @@ export default function MiniGames() {
             transition={{ delay: index * 0.1 }}
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveGame(game.id)}
+            onClick={() => openGame(game.id)}
             className="w-full text-left bg-slate-900 rounded-2xl p-5 border border-slate-800 hover:border-slate-600 transition-all group"
           >
             <div className="flex items-start gap-4">
@@ -82,7 +90,14 @@ export default function MiniGames() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-semibold text-white">{t(`games.${game.id}.title`)}</h3>
+                  <h3 className="font-semibold text-white flex items-center gap-2">
+                    {t(`games.${game.id}.title`)}
+                    {!isGameFree(game.id) && !isPro && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                        <Lock size={10} /> {t('pro.badge')}
+                      </span>
+                    )}
+                  </h3>
                   <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-full">
                     {durationText(game.seconds)}
                   </span>

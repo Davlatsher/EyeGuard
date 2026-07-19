@@ -68,7 +68,8 @@
     "gentleDesc": "Alert + dimmed screen",
     "strictDesc": "Screen is fully blocked",
     "camouflageDesc": "Transparent overlay",
-    "customInterval": "Interval"
+    "customInterval": "Interval",
+    "license": "License"
   },
   "analytics": {
     "title": "Statistics",
@@ -178,5 +179,28 @@
       "title": "Track your progress",
       "body": "Every break raises your health score. Reinforce the habit with stats, daily streaks and weekly charts."
     }
+  },
+  "pro": {
+    "badge": "Pro",
+    "free": "Free",
+    "upgrade": "Upgrade to Pro",
+    "title": "EyeGuard Pro",
+    "subtitle": "Unlock every feature",
+    "lifetime": "One-time payment — forever",
+    "buy": "Buy",
+    "haveKey": "I have a license key",
+    "enterKey": "Enter your license key",
+    "activate": "Activate",
+    "activated": "Pro activated!",
+    "invalidKey": "Invalid license key",
+    "proMember": "Pro member",
+    "deactivate": "Deactivate",
+    "locked": "This is a Pro feature",
+    "comingSoon": "Payment coming soon",
+    "feat1": "All 5 eye-exercise games",
+    "feat2": "Strict and Camouflage modes",
+    "feat3": "Pomodoro and custom timer",
+    "feat4": "Unlimited stats history",
+    "feat5": "Future updates"
   }
 }
