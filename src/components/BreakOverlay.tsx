@@ -101,7 +101,7 @@ export default function BreakOverlay() {
             )}
             <button
               onClick={() => finish(true)}
-              className="flex-1 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors"
+              className="flex-1 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white-fixed font-medium transition-colors"
             >
               {t('overlay.continue')}
             </button>

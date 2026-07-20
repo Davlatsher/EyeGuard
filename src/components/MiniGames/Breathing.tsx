@@ -131,7 +131,7 @@ export default function Breathing() {
               </p>
               <button
                 onClick={start}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white-fixed px-8 py-3 rounded-xl font-semibold transition-colors"
               >
                 {t('common.start')}
               </button>
@@ -152,7 +152,7 @@ export default function Breathing() {
                   transition={{ duration: DURATIONS[phase], ease: 'easeInOut' }}
                   className={`w-32 h-32 rounded-full bg-gradient-to-br ${circleColor} flex items-center justify-center shadow-2xl shadow-indigo-500/30`}
                 >
-                  <span className="text-3xl font-mono font-bold text-white">{timer}</span>
+                  <span className="text-3xl font-mono font-bold text-white-fixed">{timer}</span>
                 </motion.div>
               </div>
               <p className="text-2xl font-bold text-white mb-2">{labelFor(phase)}</p>

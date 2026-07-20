@@ -165,7 +165,7 @@ export default function Dashboard() {
           </button>
           <button
             onClick={() => showOverlay('break')}
-            className="flex-1 flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-semibold transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white-fixed py-3 rounded-xl font-semibold transition-colors"
           >
             <Sparkles size={18} />
             {t('dashboard.breakNow')}

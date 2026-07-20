@@ -102,7 +102,7 @@ export default function BlinkTrainer() {
               </p>
               <button 
                 onClick={startExercise}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white-fixed px-8 py-3 rounded-xl font-semibold transition-colors"
               >
                 {t('common.start')}
               </button>

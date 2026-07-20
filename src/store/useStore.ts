@@ -3,6 +3,16 @@ import * as backend from '../lib/tauri';
 import { verifyLicenseKey, loadStoredLicense, storeLicense, clearLicense } from '../lib/license';
 import { FREE_STATS_DAYS, PRO_STATS_DAYS } from '../lib/pro';
 import { evaluateUnlocked } from '../lib/achievements';
+import {
+  type Theme,
+  type Accent,
+  loadTheme,
+  loadAccent,
+  storeTheme,
+  storeAccent,
+  applyAppearance,
+  isAccentFree,
+} from '../lib/theme';
 
 const LS_ACH = 'eyeguard-achievements';
 const LS_GAMES = 'eyeguard-games';
@@ -89,6 +99,12 @@ interface EyeGuardState {
   checkAchievements: () => void;
   clearAchievementToast: () => void;
 
+  // Appearance
+  theme: Theme;
+  accent: Accent;
+  setTheme: (theme: Theme) => void;
+  setAccent: (accent: Accent) => void;
+
   // Lifecycle
   hydrated: boolean;
   hydrate: () => Promise<void>;
@@ -130,6 +146,16 @@ function toBackendSettings(s: EyeGuardState): backend.BackendSettings {
 export const useStore = create<EyeGuardState>((set, get) => {
   // Restore a previously activated Pro license (verified) at startup.
   const stored = loadStoredLicense();
+
+  // Restore appearance and apply it before the first render. A Pro-only accent
+  // that outlives its license (or was set manually) falls back to the default.
+  const initialTheme = loadTheme();
+  let initialAccent = loadAccent();
+  if (!isAccentFree(initialAccent) && stored === null) {
+    initialAccent = 'sky';
+    storeAccent('sky');
+  }
+  applyAppearance(initialTheme, initialAccent);
 
   // Fire-and-forget persistence of the whole settings object.
   const persistSettings = () => {
@@ -183,7 +209,14 @@ export const useStore = create<EyeGuardState>((set, get) => {
 
     deactivateLicense: () => {
       clearLicense();
-      set({ isPro: false, licenseEmail: null });
+      // Revert any Pro-only accent back to the free default.
+      if (!isAccentFree(get().accent)) {
+        storeAccent('sky');
+        applyAppearance(get().theme, 'sky');
+        set({ isPro: false, licenseEmail: null, accent: 'sky' });
+      } else {
+        set({ isPro: false, licenseEmail: null });
+      }
     },
 
     openUpgrade: () => set({ upgradeOpen: true }),
@@ -211,6 +244,27 @@ export const useStore = create<EyeGuardState>((set, get) => {
     },
 
     clearAchievementToast: () => set({ achievementToast: null }),
+
+    // Appearance (restored from localStorage, applied at store creation)
+    theme: initialTheme,
+    accent: initialAccent,
+
+    setTheme: (theme) => {
+      storeTheme(theme);
+      applyAppearance(theme, get().accent);
+      set({ theme });
+    },
+
+    setAccent: (accent) => {
+      // Non-default accents are a Pro perk.
+      if (!isAccentFree(accent) && !get().isPro) {
+        set({ upgradeOpen: true });
+        return;
+      }
+      storeAccent(accent);
+      applyAppearance(get().theme, accent);
+      set({ accent });
+    },
 
     hydrated: false,
 

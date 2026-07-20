@@ -116,7 +116,7 @@ export default function ColorMatch() {
               </p>
               <button
                 onClick={start}
-                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                className="bg-purple-500 hover:bg-purple-600 text-white-fixed px-8 py-3 rounded-xl font-semibold transition-colors"
               >
                 {t('common.start')}
               </button>

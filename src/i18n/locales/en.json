@@ -69,7 +69,17 @@
     "strictDesc": "Screen is fully blocked",
     "camouflageDesc": "Transparent overlay",
     "customInterval": "Interval",
-    "license": "License"
+    "license": "License",
+    "appearance": "Appearance",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "accentColor": "Accent color",
+    "accent": {
+      "sky": "Sky",
+      "emerald": "Emerald",
+      "violet": "Violet",
+      "rose": "Rose"
+    }
   },
   "analytics": {
     "title": "Statistics",

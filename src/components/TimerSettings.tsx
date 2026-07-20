@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { Timer, Bell, Volume2, Moon, Shield, Sliders, Power, Globe, Crown, Lock } from 'lucide-react';
+import { Timer, Bell, Volume2, Moon, Sun, Shield, Sliders, Power, Globe, Crown, Lock, Palette } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useStore, TimerMode, BreakMode } from '../store/useStore';
 import { setAutoStart } from '../lib/tauri';
 import { SUPPORTED_LANGUAGES, setLang, type LangCode } from '../i18n';
 import { isTimerModeFree, isBreakModeFree } from '../lib/pro';
+import { ACCENTS, ACCENT_SWATCH, isAccentFree, type Accent } from '../lib/theme';
 
 export default function TimerSettings() {
   const { t, i18n } = useTranslation();
@@ -26,6 +27,10 @@ export default function TimerSettings() {
     licenseEmail,
     openUpgrade,
     deactivateLicense,
+    theme,
+    accent,
+    setTheme,
+    setAccent,
   } = useStore();
 
   const pickTimerMode = (mode: TimerMode) => {
@@ -61,7 +66,7 @@ export default function TimerSettings() {
         <div className="flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-2xl p-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-              <Crown className="w-5 h-5 text-white" />
+              <Crown className="w-5 h-5 text-white-fixed" />
             </div>
             <div>
               <div className="font-semibold text-amber-300">{t('pro.proMember')}</div>
@@ -82,7 +87,7 @@ export default function TimerSettings() {
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-              <Crown className="w-5 h-5 text-white" />
+              <Crown className="w-5 h-5 text-white-fixed" />
             </div>
             <div className="text-left">
               <div className="font-semibold text-white">{t('pro.upgrade')}</div>
@@ -110,6 +115,62 @@ export default function TimerSettings() {
               <span className="text-sm font-medium">{lang.label}</span>
             </button>
           ))}
+        </div>
+      </Section>
+
+      {/* Appearance */}
+      <Section icon={<Palette className="w-5 h-5" />} title={t('settings.appearance')}>
+        {/* Theme (light / dark) — free */}
+        <div className="grid grid-cols-2 gap-3">
+          {([
+            { id: 'dark', label: t('settings.themeDark'), icon: <Moon size={18} /> },
+            { id: 'light', label: t('settings.themeLight'), icon: <Sun size={18} /> },
+          ] as const).map((opt) => (
+            <button
+              key={opt.id}
+              onClick={() => setTheme(opt.id)}
+              className={`flex items-center justify-center gap-2 p-3 rounded-2xl border transition-all ${
+                theme === opt.id
+                  ? 'bg-sky-500/10 border-sky-500/50 text-sky-400'
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-600'
+              }`}
+            >
+              {opt.icon}
+              <span className="text-sm font-medium">{opt.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Accent color — default is free, the rest are Pro */}
+        <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-slate-300">{t('settings.accentColor')}</span>
+            {!isPro && <span className="text-xs text-amber-400 flex items-center gap-1"><Crown size={12} /> Pro</span>}
+          </div>
+          <div className="flex items-center gap-3">
+            {ACCENTS.map((a: Accent) => {
+              const active = accent === a;
+              const locked = !isAccentFree(a) && !isPro;
+              return (
+                <button
+                  key={a}
+                  onClick={() => setAccent(a)}
+                  aria-label={a}
+                  title={t(`settings.accent.${a}`)}
+                  className={`relative w-10 h-10 rounded-full transition-transform hover:scale-110 ${
+                    active ? 'ring-2 ring-offset-2 ring-offset-slate-800 ring-slate-100' : ''
+                  }`}
+                  style={{ backgroundColor: ACCENT_SWATCH[a] }}
+                >
+                  {locked && (
+                    <span className="absolute inset-0 flex items-center justify-center rounded-full bg-slate-950/40">
+                      <Lock size={14} className="text-white-fixed" />
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </Section>
 

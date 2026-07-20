@@ -59,7 +59,7 @@ export default function OverlayView() {
         >
           😌
         </motion.div>
-        <h1 className="text-4xl font-bold text-white mb-3">{t('overlay.strictTitle')}</h1>
+        <h1 className="text-4xl font-bold text-white-fixed mb-3">{t('overlay.strictTitle')}</h1>
         <p className="text-slate-400 mb-10 max-w-md mx-auto">{t('overlay.strictBody')}</p>
 
         <div className="text-7xl font-mono font-bold text-sky-400 mb-10">

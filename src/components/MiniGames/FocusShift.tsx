@@ -102,7 +102,7 @@ export default function FocusShift() {
               </p>
               <button 
                 onClick={startExercise}
-                className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                className="bg-amber-500 hover:bg-amber-600 text-white-fixed px-8 py-3 rounded-xl font-semibold transition-colors"
               >
                 {t('common.start')}
               </button>
@@ -123,7 +123,7 @@ export default function FocusShift() {
                 className="relative mb-4"
               >
                 <div className="w-32 h-32 mx-auto rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-                  <span className="text-4xl font-bold text-white">YA</span>
+                  <span className="text-4xl font-bold text-white-fixed">YA</span>
                 </div>
                 <motion.div
                   animate={{ opacity: [0.5, 1, 0.5] }}
@@ -163,7 +163,7 @@ export default function FocusShift() {
                 className="relative mb-4"
               >
                 <div className="w-16 h-16 mx-auto rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-sky-500/30">
-                  <span className="text-xl font-bold text-white">UZ</span>
+                  <span className="text-xl font-bold text-white-fixed">UZ</span>
                 </div>
                 <motion.div
                   animate={{ opacity: [0.5, 1, 0.5] }}

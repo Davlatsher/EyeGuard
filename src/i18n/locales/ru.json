@@ -69,7 +69,17 @@
     "strictDesc": "Экран полностью блокируется",
     "camouflageDesc": "Прозрачный оверлей",
     "customInterval": "Интервал",
-    "license": "Лицензия"
+    "license": "Лицензия",
+    "appearance": "Оформление",
+    "themeDark": "Тёмная",
+    "themeLight": "Светлая",
+    "accentColor": "Основной цвет",
+    "accent": {
+      "sky": "Небо",
+      "emerald": "Изумруд",
+      "violet": "Фиолетовый",
+      "rose": "Роза"
+    }
   },
   "analytics": {
     "title": "Статистика",

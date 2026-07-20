@@ -69,7 +69,17 @@
     "strictDesc": "Ekran to’liq bloklanadi",
     "camouflageDesc": "Shaffof overlay",
     "customInterval": "Interval",
-    "license": "Litsenziya"
+    "license": "Litsenziya",
+    "appearance": "Ko'rinish",
+    "themeDark": "Tungi",
+    "themeLight": "Kunduzgi",
+    "accentColor": "Asosiy rang",
+    "accent": {
+      "sky": "Osmon",
+      "emerald": "Zumrad",
+      "violet": "Binafsha",
+      "rose": "Atirgul"
+    }
   },
   "analytics": {
     "title": "Statistika",

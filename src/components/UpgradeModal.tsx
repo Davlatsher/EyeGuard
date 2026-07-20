@@ -46,7 +46,7 @@ export default function UpgradeModal() {
 
         <div className="relative">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-5">
-            <Crown className="w-8 h-8 text-white" />
+            <Crown className="w-8 h-8 text-white-fixed" />
           </div>
 
           <h2 className="text-2xl font-bold text-white mb-1">{t('pro.title')}</h2>
@@ -79,7 +79,7 @@ export default function UpgradeModal() {
               <button
                 disabled
                 title={t('pro.comingSoon')}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold opacity-60 cursor-not-allowed"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white-fixed font-semibold opacity-60 cursor-not-allowed"
               >
                 {t('pro.buy')} · {t('pro.comingSoon')}
               </button>
@@ -108,7 +108,7 @@ export default function UpgradeModal() {
               {error && <p className="text-xs text-red-400">{t('pro.invalidKey')}</p>}
               <button
                 onClick={handleActivate}
-                className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-semibold transition-colors"
+                className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white-fixed font-semibold transition-colors"
               >
                 {t('pro.activate')}
               </button>

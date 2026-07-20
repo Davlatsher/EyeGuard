@@ -77,7 +77,7 @@
   - Pro: barcha rejimlar, 5 o'yin, 30-kun statistika, custom timer — gating + upgrade modal bilan
 - [x] **Litsenziya tizimi** (asosiy) ✅: offline ed25519 litsenziya kaliti (`lib/license.ts`, `@noble/ed25519`), aktivatsiya UI, developer tools (`scripts/`). _Qoldi:_ Paddle/LemonSqueezy to'lov integratsiyasi (webhook + haqiqiy sotib olish)
 - [x] **Gamifikatsiya chuqurligi** ✅ (commit `8ac120d`): 10 ta yutuq (achievements), daraja/XP tizimi (LevelCard + AchievementsGrid + unlock toast). _Qoldi:_ haftalik challenge'lar
-- [ ] **Light theme** + 2–3 rang temalar (Pro)
+- [x] **Light theme** + rang temalar ✅ (`lib/theme.ts`): CSS-o'zgaruvchili palitra (slate/sky/indigo/white Tailwind ranglari `rgb(var(--…))` orqali) — komponentlarni qayta yozmasdan dark ↔ light almashadi. Light/dark bepul; 3 accent tema (Zumrad/Binafsha/Atirgul) Pro. `data-theme`/`data-accent` `<html>`da, localStorage'da saqlanadi, Sozlamalarda tanlagich. Brauzerda dark/light + accent tekshirilgan (regressiyasiz)
 - [ ] **Ixtiyoriy telemetriya** (opt-in, faqat anonim events) — mahsulot qarorlari uchun
 - [ ] **Veb-sayt**: landing + to'lov + yuklab olish + changelog
 - [ ] **Microsoft Store** listing

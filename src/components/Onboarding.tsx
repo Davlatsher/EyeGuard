@@ -120,7 +120,7 @@ export default function Onboarding({ onDone }: { onDone: () => void }) {
             )}
             <button
               onClick={next}
-              className="flex-1 py-3 rounded-xl bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors"
+              className="flex-1 py-3 rounded-xl bg-sky-500 text-white-fixed font-semibold hover:bg-sky-400 transition-colors"
             >
               {isLast ? t('onboarding.start') : t('onboarding.next')}
             </button>

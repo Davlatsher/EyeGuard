@@ -31,7 +31,7 @@ export function LevelCard() {
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="relative flex items-center gap-4">
         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center flex-shrink-0">
-          <span className="text-xl font-bold text-white">{level.level}</span>
+          <span className="text-xl font-bold text-white-fixed">{level.level}</span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">

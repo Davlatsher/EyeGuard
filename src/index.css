@@ -2,10 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme tokens.
+ *
+ * Every surface/text (slate), accent (sky/indigo) and `white` Tailwind class
+ * resolves to these RGB channel-list variables (see tailwind.config.js).
+ *
+ *   :root                     → dark theme; values equal Tailwind's stock
+ *                               palette so the default look is pixel-identical.
+ *   :root[data-theme=light]   → light theme (neutral ramp inverted).
+ *   :root[data-accent=…]      → Pro accent themes swap the sky/indigo pair.
+ */
+:root {
+  /* Neutral / surface ramp — Tailwind slate. */
+  --slate-50: 248 250 252;
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+  --slate-800: 30 41 59;
+  --slate-850: 24 33 51;
+  --slate-900: 15 23 42;
+  --slate-950: 2 6 23;
+
+  /* Accent pair — Tailwind sky + indigo (default "sky" theme). */
+  --sky-300: 125 211 252;
+  --sky-400: 56 189 248;
+  --sky-500: 14 165 233;
+  --sky-600: 2 132 199;
+  --sky-700: 3 105 161;
+
+  --indigo-300: 165 180 252;
+  --indigo-400: 129 140 248;
+  --indigo-500: 99 102 241;
+  --indigo-600: 79 70 229;
+  --indigo-700: 67 56 202;
+
+  --white: 255 255 255;
+}
+
+/* ── Light theme ──────────────────────────────────────────────────────────
+ * The neutral ramp is inverted: high shades (page/card surfaces) become light,
+ * low shades (primary text) become dark. Accent shades stay vivid so buttons
+ * and highlights read the same on a light background.
+ */
+:root[data-theme='light'] {
+  --slate-50: 15 23 42;    /* primary text  */
+  --slate-100: 30 41 59;
+  --slate-200: 51 65 85;
+  --slate-300: 71 85 105;  /* secondary text */
+  --slate-400: 100 116 139;/* muted text */
+  --slate-500: 130 143 163;/* faint text */
+  --slate-600: 190 198 210;
+  --slate-700: 214 221 230;/* borders */
+  --slate-800: 255 255 255;/* card surface */
+  --slate-850: 250 251 253;
+  --slate-900: 247 249 251;/* header / nav */
+  --slate-950: 238 242 247;/* page background */
+
+  /* text-white / bg-white flip to dark so headings on light cards stay legible. */
+  --white: 15 23 42;
+}
+
+/* ── Pro accent themes ────────────────────────────────────────────────────
+ * Swap the sky/indigo pair to a coordinated hue. Shades match Tailwind so the
+ * existing 300–700 usages and gradients stay balanced.
+ */
+:root[data-accent='emerald'] {
+  --sky-300: 110 231 183;
+  --sky-400: 52 211 153;
+  --sky-500: 16 185 129;
+  --sky-600: 5 150 105;
+  --sky-700: 4 120 87;
+
+  --indigo-300: 94 234 212;
+  --indigo-400: 45 212 191;
+  --indigo-500: 20 184 166;
+  --indigo-600: 13 148 136;
+  --indigo-700: 15 118 110;
+}
+
+:root[data-accent='violet'] {
+  --sky-300: 196 181 253;
+  --sky-400: 167 139 250;
+  --sky-500: 139 92 246;
+  --sky-600: 124 58 237;
+  --sky-700: 109 40 217;
+
+  --indigo-300: 240 171 252;
+  --indigo-400: 232 121 249;
+  --indigo-500: 217 70 239;
+  --indigo-600: 192 38 211;
+  --indigo-700: 162 28 175;
+}
+
+:root[data-accent='rose'] {
+  --sky-300: 253 164 175;
+  --sky-400: 251 113 133;
+  --sky-500: 244 63 94;
+  --sky-600: 225 29 72;
+  --sky-700: 190 18 60;
+
+  --indigo-300: 253 186 116;
+  --indigo-400: 251 146 60;
+  --indigo-500: 249 115 22;
+  --indigo-600: 234 88 12;
+  --indigo-700: 194 65 12;
+}
+
 @layer base {
   body {
     @apply bg-slate-950 text-slate-100 antialiased;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::-webkit-scrollbar {
@@ -32,5 +144,12 @@
 
   .gradient-sky {
     @apply bg-gradient-to-br from-sky-500/20 to-indigo-500/20;
+  }
+
+  /* Force pure white regardless of theme — for text/icons that sit on a
+     saturated accent fill or gradient, where the surface stays dark in both
+     themes. */
+  .text-white-fixed {
+    color: #fff;
   }
 }
